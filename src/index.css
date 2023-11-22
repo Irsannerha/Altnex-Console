@@ -1,0 +1,24 @@
+.vertical-line {
+    border-left: 3px solid #000000;
+    /* Ganti warna dan ketebalan sesuai keinginan */
+    height: 30px;
+    /* Atur tinggi garis sesuai kebutuhan */
+}
+
+#promo-text.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+/* Gaya umum */
+.fade-out-up {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+}
+
+/* Gaya responsif untuk layar yang lebih besar */
+@media (min-width: 992px) {
+    .fade-out-up {
+        /* Tambahkan gaya responsif di sini jika diperlukan */
+    }
+}
