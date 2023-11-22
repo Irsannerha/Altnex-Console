@@ -52,7 +52,7 @@ function Navbars() {
               <Nav.Link href="#kontak" className="me-3">
                 Kontak
               </Nav.Link>
-              <Nav.Link href="#login" style={{ fontWeight: "bold" }}>
+              <Nav.Link href="/login" style={{ fontWeight: "bold" }}>
                 Login
               </Nav.Link>
             </Nav>

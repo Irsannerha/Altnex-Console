@@ -4,8 +4,10 @@ import React from "react";
 import Beranda from "./page/Beranda";
 // import Kontak from "./page/Kontak";
 // import Tentang from "./page/Tentang";
-// import Login from "./page/Login";
-// import Register from "./page/register";
+import Login from "./page/Login";
+import Register from "./page/Register";
+import ForgotPassword from "./page/ForgotPassword";
+import NewPassword from "./page/NewPassword";
 // import Checkout from "./page/Checkout";
 // import Dashboard from "./page/Dashboard";
 // import UserLogin from "./components/UserLogin";
@@ -17,10 +19,13 @@ export default function RoutesApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Beranda />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/newpassword" element={<NewPassword />} />
         {/* <Route path="/kontak" element={<Kontak />} />
         <Route path="/tentang" element={<Tentang />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/userlogin" element={<UserLogin />} />
