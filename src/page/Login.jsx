@@ -54,7 +54,7 @@ function Login() {
             border="success"
             style={{
               width: "25rem",
-              height: "15.7rem",
+              height: "17.9rem",
               backgroundColor: "#F6F4F1",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
             }}
@@ -94,33 +94,44 @@ function Login() {
 
                 <div style={{ textAlign: "right", marginBottom: "10px" }}>
                   <Link
-                    to="/forgot-password"
+                    to="/forgotpassword"
                     style={{ fontSize: "0.8rem", textDecoration: "none" }}
                   >
                     Forgot Password?
                   </Link>
                 </div>
 
-                <Button
-                  type="submit"
-                  style={{
-                    width: "120px",
-                    height: "40px",
-                    backgroundColor: "#FFB031",
-                    display: "block",
-                    margin: "auto",
-                    transition: "background-color 0.2s ease",
-                    cursor: "pointer",
-                  }}
-                  onMouseOver={(e) =>
-                    (e.target.style.backgroundColor = "#3DB5FF")
-                  }
-                  onMouseOut={(e) =>
-                    (e.target.style.backgroundColor = "#FFB031")
-                  } //hover
-                >
-                  Login
-                </Button>
+                <div>
+                  <Button
+                    type="submit"
+                    style={{
+                      width: "120px",
+                      height: "40px",
+                      backgroundColor: "#FFB031",
+                      display: "block",
+                      margin: "auto",
+                      transition: "background-color 0.2s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#3DB5FF")
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = "#FFB031")
+                    } //hover
+                  >
+                    Login
+                  </Button>
+                  <p style={{ textAlign: "center", marginTop: "10px", fontSize: "13px" }}>
+                    Do you have an account?{" "}
+                    <a
+                      href="/register"
+                      style={{ fontSize: "0.9rem", textDecoration: "none", fontSize: "13px" }}
+                    >
+                      Register
+                    </a>
+                  </p>
+                </div>
               </Form>
             </Card.Body>
           </Card>

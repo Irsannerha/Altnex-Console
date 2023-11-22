@@ -9,8 +9,9 @@ import Container from "react-bootstrap/Container";
 function Beranda() {
   const promoTexts = [
     "Promo ! Besar-Besaran dapatkan diskon nya sekarang juga!...",
-    "Promo ! Buruan Mainkan sekarang juga!...",
-    "Sambut ! Ajang bergengsi lomba PES 2023. Buruan Daftar Sekarang juga!...",
+    "Promo Bulan November!, GRATIS 1 Jam untuk semua game. Buruan Mainkan sekarang juga!...",
+    "Sambutlah ! Ajang bergengsi lomba FIFA23. Buruan Ambil Hadiahnya dan Daftar Sekarang juga!...",
+    "Telah dibuka Paket Malam. Makin seru dengan harga yang terjangkau!",
   ];
 
   const [currentTextIndex, setCurrentTextIndex] = useState(0);

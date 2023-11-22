@@ -54,7 +54,7 @@ function Register() {
             border="success"
             style={{
               width: "25rem",
-              height: "20.5rem",
+              height: "22.5rem",
               backgroundColor: "#F6F4F1",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
             }}
@@ -111,26 +111,47 @@ function Register() {
                   </InputGroup>
                 </Form.Group>
 
-                <Button
-                  type="submit"
-                  style={{
-                    width: "120px",
-                    height: "40px",
-                    backgroundColor: "#FFB031",
-                    display: "block",
-                    margin: "auto",
-                    transition: "background-color 0.2s ease",
-                    cursor: "pointer",
-                  }}
-                  onMouseOver={(e) =>
-                    (e.target.style.backgroundColor = "#3DB5FF")
-                  }
-                  onMouseOut={(e) =>
-                    (e.target.style.backgroundColor = "#FFB031")
-                  } //hover
-                >
-                  Register
-                </Button>
+                <div>
+                  <Button
+                    type="submit"
+                    style={{
+                      width: "120px",
+                      height: "40px",
+                      backgroundColor: "#FFB031",
+                      display: "block",
+                      margin: "auto",
+                      transition: "background-color 0.2s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#3DB5FF")
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = "#FFB031")
+                    } //hover
+                  >
+                    Login
+                  </Button>
+                  <p
+                    style={{
+                      textAlign: "center",
+                      marginTop: "10px",
+                      fontSize: "13px",
+                    }}
+                  >
+                    Already have an account?{" "}
+                    <a
+                      href="/login"
+                      style={{
+                        fontSize: "0.9rem",
+                        textDecoration: "none",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Login
+                    </a>
+                  </p>
+                </div>
               </Form>
             </Card.Body>
           </Card>
