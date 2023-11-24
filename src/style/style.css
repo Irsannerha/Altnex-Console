@@ -1,0 +1,101 @@
+.mybg {
+     height: auto;
+     background-color: #E2EAEF;
+     
+   }
+
+
+.cardPemesanan {
+     border: none;
+     padding: 20px;
+     text-align: center;
+     height: auto;
+     width: 900px;
+     margin: auto;
+     background-color: #F5F7FA;
+     margin-bottom: 250px;
+    
+}
+
+.tombolPaket{
+     border: none;
+     font-weight: bold;
+     background-color: #FCC000;
+     height: 60px;
+     width: 45%;
+
+     text-align: left;
+}
+
+.contenPemesanan{
+     width: 45%;
+     margin-top: 20px;
+}
+
+.cekJadwal{
+     margin-top: 10px;
+     background-color: #FCC000;
+     border: none;
+     color: #252524;
+     font-size: 12px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.judulMetodePembayaran{
+     width: 140px;
+     height: 20px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     font-weight: bold;
+     font-size: 12px;
+}
+
+.boederRadius{
+     border-radius: 18px;
+     -webkit-border-radius: 18px;
+     -moz-border-radius: 18px;
+     -ms-border-radius: 18px;
+     -o-border-radius: 18px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tombolJenisPembayaran{
+     background-color: #ffffff;
+     color: #252524;
+     border: none;
+     width: 280px;
+     font-size: 14px;
+     margin-bottom: 14px;
+     text-align: left;
+}
+
+.cardHargaExtra{
+     height: 130px;
+     background-color: #F5F7FA;
+     border-color: #FFB031;
+}
+
+.hargaButton {
+     margin: 10px;
+     width: 70px;
+     padding: 5px;
+     background-color: #F5F7FA;
+     color: #252524;
+     border: none;
+     cursor: pointer;
+     outline: none;
+   }
+   
+   .hargaButton.selected {
+     background-color: #fcc000;
+     color: #252524;
+   }
+
+.durasiPaketExtra{
+     font-size: 7px;
+     margin-top: -3px;
+     color: #E82C2C;
+     font-style: italic;
+     font-weight: bold;
+}
