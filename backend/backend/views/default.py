@@ -1,6 +1,12 @@
 from pyramid.view import view_config
+from pyramid.response import Response
+from sqlalchemy.exc import SQLAlchemyError
+from pyramid.httpexceptions import HTTPBadRequest
+from ..models.mymodel import User
+from sqlalchemy.exc import DBAPIError
 import json
-import pymysql
+from ..models.mymodel import DBSession
+import bcrypt
 
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
 def my_view(request):
@@ -8,20 +14,24 @@ def my_view(request):
 
 @view_config(route_name='add_user', request_method='POST', renderer='json')
 def register(request):
-    conn = pymysql.connect(host='localhost', user='root', password='', db='altnex')
-    cursor = conn.cursor()
-    user_data = request.json_body
-    cursor.execute("SELECT MAX(id) FROM user")
-    max_id = cursor.fetchone()[0]
-    new_id = max_id + 1 if max_id else 1
-        
-    insert_query = """
-    INSERT INTO user (id, nama, email, password) VALUES (%s, %s, %s, %s)
-    """
-    cursor.execute(insert_query, (new_id, user_data['nama'], user_data['email'], user_data['password']))
-    conn.commit()
-        
-    # Tutup koneksi ke database
-    cursor.close()
-    conn.close()
-    return {'status': 'success', 'User': {'id': new_id, **user_data}}
+    try:
+        data = request.json_body
+        nama = data['nama']
+        email = data['email']
+        password = data['password']
+
+        # Hashing password sebelum menyimpan ke database
+        # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        new_user = User(nama=nama, email=email, password=password)
+
+        DBSession.add(new_user)
+        DBSession.flush()
+        DBSession.commit()
+
+        return {"status": "success"}
+
+    except KeyError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
+    except DBAPIError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})

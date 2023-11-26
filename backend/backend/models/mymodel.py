@@ -23,8 +23,8 @@ Index('my_index', MyModel.name, unique=True, mysql_length=255)
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(255), nullable=False)
+    nama = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
 
-Index('user', User.name, unique=True, mysql_length=255)
+Index('user', User.nama, unique=True, mysql_length=255)
