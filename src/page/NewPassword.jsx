@@ -73,7 +73,7 @@ function NewPass() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     type="email"
-                    placeholder="Masukkan Email Anda"
+                    placeholder="Masukkan Password Baru Anda"
                   />
                 </Form.Group>
 
@@ -81,7 +81,7 @@ function NewPass() {
                   <InputGroup>
                     <Form.Control
                       type={showPassword ? "text" : "password"}
-                      placeholder="Masukkan Password Anda"
+                      placeholder="Masukkan Ulangi Password Baru Anda"
                     />
                     <InputGroup.Text
                       onClick={togglePasswordVisibility}
