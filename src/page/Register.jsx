@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom"; 
+import axios from 'axios';
 
 import backgroundImage from "../assets/img/bg-ps.jpg";
 import logo from "../assets/img/iconlog.png";
@@ -13,6 +13,40 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const [inputData, setInputData] = useState({
+    nama: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const handleInputChange = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(inputData);
+    try {
+      if (inputData.password !== inputData.confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      const response = await axios.post('/api/register', inputData);
+      console.log(response.data);
+      // Handle response / success
+      if (response.data.status === "success") {
+        alert("User berhasil ditambahkan");
+      } else {
+        alert("Gagal menambahkan User");
+      }
+    } catch (error) {
+      console.error('Error sending data', error);
+      // Handle error
+    }
   };
 
   return (
@@ -69,15 +103,17 @@ function Register() {
               >
                 REGISTER
               </Card.Title>
-              <Form>
+              <form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control type="name" placeholder="Masukkan Nama Anda" />
+                  <Form.Control type="name" name="nama" placeholder="Masukkan Nama Anda" onChange={handleInputChange} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
-                    type="email"
+                    type="text"
+                    name="email"
                     placeholder="Masukkan Email Anda"
+                    onChange={handleInputChange}
                   />
                 </Form.Group>
 
@@ -85,7 +121,9 @@ function Register() {
                   <InputGroup>
                     <Form.Control
                       type={showPassword ? "text" : "password"}
+                      name="password"
                       placeholder="Masukkan Password Anda"
+                      onChange={handleInputChange}
                     />
                     <InputGroup.Text
                       onClick={togglePasswordVisibility}
@@ -100,7 +138,9 @@ function Register() {
                   <InputGroup>
                     <Form.Control
                       type={showPassword ? "text" : "password"}
+                      name = "confirmPassword"
                       placeholder="Masukkan Ulangi Password Anda"
+                      onChange={handleInputChange}
                     />
                     <InputGroup.Text
                       onClick={togglePasswordVisibility}
@@ -130,7 +170,7 @@ function Register() {
                       (e.target.style.backgroundColor = "#FFB031")
                     } //hover
                   >
-                    Login
+                    Register
                   </Button>
                   <p
                     style={{
@@ -143,7 +183,6 @@ function Register() {
                     <a
                       href="/login"
                       style={{
-                        fontSize: "0.9rem",
                         textDecoration: "none",
                         fontSize: "13px",
                       }}
@@ -152,7 +191,7 @@ function Register() {
                     </a>
                   </p>
                 </div>
-              </Form>
+              </form>
             </Card.Body>
           </Card>
         </div>
