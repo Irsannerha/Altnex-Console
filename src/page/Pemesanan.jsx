@@ -2,7 +2,7 @@ import Navbars from "../components/Navbars";
 import { Card, Button, Form } from "react-bootstrap";
 import "../style/style.css";
 import gameOver from "../assets/img/gameOver.png";
-import ContenDeluxe from "../components/contenDeluxe";
+import ContenDeluxe from "../components/ContenDeluxe";
 import ContenExtra from "../components/ContenExtra";
 import React, { useState } from "react";
 

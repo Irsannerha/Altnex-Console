@@ -65,6 +65,7 @@ function Login() {
                   textAlign: "center",
                   fontWeight: "bold",
                   fontSize: "25px",
+                  marginTop: "7px",
                 }}
               >
                 LOGIN

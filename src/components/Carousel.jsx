@@ -13,6 +13,7 @@ function CarouselItem() {
   return (
     <Carousel>
       <Carousel.Item>
+        
         <CarouselImage text="First slide" image={ImageBgPlay1} />
         <Carousel.Caption>
           {/* <h3>First slide label</h3>

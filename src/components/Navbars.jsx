@@ -2,7 +2,6 @@ import Logo from "../assets/img/logo.png";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { useState, useEffect } from "react";
 
 function Navbars() {
@@ -34,8 +33,8 @@ function Navbars() {
             <img
               alt=""
               src={Logo}
-              width="95"
-              height="25"
+              width="110"
+              height="30"
               className="d-inline-block align-top"
             />{" "}
             ALTNEX CONSOLE
