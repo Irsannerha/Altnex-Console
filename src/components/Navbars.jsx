@@ -29,7 +29,7 @@ function Navbars() {
         expand="lg"
       >
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand href="/">
             <img
               alt=""
               src={Logo}
@@ -42,7 +42,7 @@ function Navbars() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link href="#home" className="me-3">
+              <Nav.Link href="/" className="me-3">
                 Home
               </Nav.Link>
               <Nav.Link href="#produk" className="me-3">
