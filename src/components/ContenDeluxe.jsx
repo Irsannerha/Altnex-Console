@@ -23,7 +23,7 @@ function ContenDeluxe() {
             Excepteur sint occaecat cupidatat non proident.
           </Card.Text>
 
-          <Card.Subtitle className="mb-2" style={{ textAlign: "left" }}>
+          <Card.Subtitle className="mb-2 mt-4" style={{ textAlign: "left" }}>
             Input Date, Time, and Duration
           </Card.Subtitle>
           <div

@@ -34,7 +34,7 @@ function ContenExtra() {
             voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             Excepteur sint occaecat cupidatat non proident.
           </Card.Text>
-          <Card.Subtitle className="mb-2" style={{ textAlign: "left" }}>
+          <Card.Subtitle className="mb-2 mt-4" style={{ textAlign: "left" }}>
             Input Date
           </Card.Subtitle>
           <div
@@ -61,6 +61,7 @@ function ContenExtra() {
                   marginBottom: "10px",
                   fontWeight: "bold",
                   fontSize: "16px",
+                  marginTop : "5px",
                 }}
               >
                 Play night package
