@@ -11,8 +11,33 @@ import logo from "../assets/img/iconlog.png";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(email, password)
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert("Login Berhasil")
+      } else {
+        // Tangani error
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('There was an error:', error);
+    }
   };
 
   return (
@@ -69,11 +94,14 @@ function Login() {
               >
                 LOGIN
               </Card.Title>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     type="email"
+                    name="email"
                     placeholder="Masukkan Email Anda"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                   />
                 </Form.Group>
 
@@ -81,7 +109,10 @@ function Login() {
                   <InputGroup>
                     <Form.Control
                       type={showPassword ? "text" : "password"}
+                      name="password"
                       placeholder="Masukkan Password Anda"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                     />
                     <InputGroup.Text
                       onClick={togglePasswordVisibility}
