@@ -9,6 +9,7 @@ import Register from "./page/Register";
 import ForgotPassword from "./page/ForgotPassword";
 import NewPassword from "./page/NewPassword";
 import Pemesanan from "./page/Pemesanan";
+
 // import Checkout from "./page/Checkout";
 // import Dashboard from "./page/Dashboard";
 // import UserLogin from "./components/UserLogin";
@@ -25,6 +26,7 @@ export default function RoutesApp() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/Pemesanan" element={<Pemesanan />} />
+
         {/* <Route path="/kontak" element={<Kontak />} />
         <Route path="/tentang" element={<Tentang />} />
         <Route path="/login" element={<Login />} />

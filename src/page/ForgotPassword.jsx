@@ -65,13 +65,17 @@ function ForgotPassword() {
                   textAlign: "center",
                   fontWeight: "bold",
                   fontSize: "25px",
+                  marginTop: "7px",
                 }}
               >
                 FORGOT PASSWORD
               </Card.Title>
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Masukkan Email Anda" />
+                  <Form.Control
+                    type="email"
+                    placeholder="Masukkan Email Anda"
+                  />
                 </Form.Group>
 
                 <Button
