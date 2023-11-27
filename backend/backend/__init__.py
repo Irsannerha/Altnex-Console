@@ -4,6 +4,7 @@ from sqlalchemy import engine_from_config
 from .models.mymodel import DBSession, Base
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid_jwt.policy import JWTAuthenticationPolicy
+from pyramid.session import SignedCookieSessionFactory
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -23,8 +24,12 @@ def main(global_config, **settings):
         authz_policy = ACLAuthorizationPolicy()
         config.set_authentication_policy(authn_policy)
         config.set_authorization_policy(authz_policy)
+        my_session_factory = SignedCookieSessionFactory('itsaseekreet')
+        config.set_session_factory(my_session_factory)
         config.add_route('add_user', '/api/register', request_method="POST")
         config.add_route('login', '/api/login', request_method='POST')
+        config.add_route('forgot_password', '/api/forgot_password', request_method='POST')
+        config.add_route('new_password', '/api/new_password', request_method='POST')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()

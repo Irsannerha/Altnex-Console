@@ -25,6 +25,11 @@ def register(request):
 
         # Hashing password sebelum menyimpan ke database
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        
+        user = DBSession.query(User).filter(User.email == email).first()
+
+        if user:
+            return Response('Email Sudah ada', status=400)
 
         new_user = User(nama=nama, email=email, password=password, hashed_password= hashed_password, status= "Member")
 
@@ -55,10 +60,7 @@ def check_password(provided_password, stored_password_hash):
     return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password_hash.encode('utf-8'))
     
 @view_config(route_name='login', renderer='json', request_method='POST')
-def login(request):
-    # email = request.json_body.get('email')
-    # password = request.json_body.get('password')    
-             
+def login(request):             
     try:
         email = request.json_body.get('email')
         password = request.json_body.get('password')
@@ -75,6 +77,55 @@ def login(request):
         token = jwt.encode(payload, "qwert123", algorithm="HS256")
 
         return {'token': token}
+    
+    except SQLAlchemyError as e:
+        return Response('Database error: ' + str(e), status=500)
+    
+@view_config(route_name='forgot_password', renderer='json', request_method='POST')
+def forgot_password(request):             
+    try:
+        email = request.json_body.get('email')
+        
+        # Simpan email ke sesi
+        request.session['email_for_password_reset'] = email
+        
+        if not email:
+            return Response('Missing email', status=400) 
+        
+        user = DBSession.query(User).filter(User.email == email).first()
+
+        if not user:
+            return Response('User not found', status=400)
+        
+        return "Email Benar"
+    
+    except SQLAlchemyError as e:
+        return Response('Database error: ' + str(e), status=500)
+    
+@view_config(route_name='new_password', renderer='json', request_method='POST')
+def new_password(request):
+    try:
+        email = request.session.get('email_for_password_reset')
+        password = request.json_body.get('password')
+        
+        if not email:
+            return Response('Session expired or invalid', status=400)
+        
+        if not password:
+            return Response('Missing new password', status=400)
+        
+        user = DBSession.query(User).filter(User.email == email).first()
+        user.password = password
+        if not user:
+            return Response('User not found', status=400)
+        
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        user.hashed_password = hashed_password
+        
+        DBSession.add(user)
+        DBSession.commit()
+        
+        return {'message': 'Password successfully updated'}
     
     except SQLAlchemyError as e:
         return Response('Database error: ' + str(e), status=500)

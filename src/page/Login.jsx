@@ -29,7 +29,6 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json();
         alert("Login Berhasil")
       } else {
         const errorData = await response.json();

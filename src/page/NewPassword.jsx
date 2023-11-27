@@ -4,15 +4,41 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
+import { Link, useNavigate } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
 
 import backgroundImage from "../assets/img/bg-ps.jpg";
 import logo from "../assets/img/iconlog.png";
 
 function NewPass() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/new_password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        alert("Password Berhasil Diubah")
+        navigate('/login');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || "Gagal Mengubah Password");
+      }
+    } catch (error) {
+      console.error('There was an error:', error);
+      alert('Terjadi kesalahan: ' + error.message);
+    }
   };
 
   return (
@@ -70,11 +96,13 @@ function NewPass() {
               >
                 NEW PASSWORD
               </Card.Title>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
-                    type="email"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Masukkan Password Baru Anda"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                   />
                 </Form.Group>
 
@@ -83,6 +111,8 @@ function NewPass() {
                     <Form.Control
                       type={showPassword ? "text" : "password"}
                       placeholder="Masukkan Ulangi Password Baru Anda"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      value={confirmPassword}
                     />
                     <InputGroup.Text
                       onClick={togglePasswordVisibility}

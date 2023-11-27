@@ -4,15 +4,36 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
+import { Link, useNavigate } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
 
 import backgroundImage from "../assets/img/bg-ps.jpg";
 import logo from "../assets/img/iconlog.png";
 
 function ForgotPassword() {
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/forgot_password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        alert("Email Benar")
+        navigate('/newpassword');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || "Email Salah");
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan: ' + error.message);
+    }
   };
 
   return (
@@ -70,11 +91,13 @@ function ForgotPassword() {
               >
                 FORGOT PASSWORD
               </Card.Title>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
                     type="email"
                     placeholder="Masukkan Email Anda"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                   />
                 </Form.Group>
 
