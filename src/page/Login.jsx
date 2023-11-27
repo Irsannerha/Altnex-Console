@@ -32,11 +32,12 @@ function Login() {
         const data = await response.json();
         alert("Login Berhasil")
       } else {
-        // Tangani error
-        console.error('Login failed');
+        const errorData = await response.json();
+        alert(errorData.message || "Login failed");
       }
     } catch (error) {
       console.error('There was an error:', error);
+      alert('Terjadi kesalahan: ' + error.message);
     }
   };
 

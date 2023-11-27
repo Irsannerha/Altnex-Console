@@ -26,5 +26,7 @@ class User(Base):
     nama = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
+    hashed_password = Column(String(255), nullable=False)
+    status = Column(String(255), nullable=False)
 
 Index('user', User.nama, unique=True, mysql_length=255)
