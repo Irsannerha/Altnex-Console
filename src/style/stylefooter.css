@@ -4,7 +4,7 @@
     border-top-left-radius: 25px;
     margin-top: 70px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    height: 450px
+    height: 350px
 }
 .logoAlt {
     width: 304px;
@@ -19,20 +19,20 @@
 }
 .footer-logo{
     width: 430px;
-    margin-right: 50px;
+    margin-right: 120px;
 }
 .footer-content-links {
-    margin-top: 32px;
-    margin-right: 50px;
+    margin-top: 44px;
+    margin-right: 120px;
   
 }
 .footer-cotact-links {
-    margin-top: 32px;
-    margin-right: 50px;
+    margin-top: 44px;
+    margin-right: 120px;
 }
 
 .footer-news-links{
-    margin-top: 32px;
+    margin-top: 44px;
 }
 
 .link {
