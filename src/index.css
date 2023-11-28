@@ -49,3 +49,22 @@
 .btn-primary:hover {
     background-color: #0056b3;
 }
+.vertical-line {
+    border-left: 2.5px solid #000000;
+    height: 35px;
+    margin: 0 2px;
+}
+.title-ps {
+    background: linear-gradient(to right, #000000, #FFB031, #f4bd66,#000000);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-weight: bold;
+}
+.nav-text {
+    background: linear-gradient(to right, #000000, #FFB031, #f4bd66, #000000);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    font-weight: 500;
+}

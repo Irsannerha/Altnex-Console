@@ -19,20 +19,21 @@
 }
 .footer-logo{
     width: 430px;
-    margin-right: 120px;
+    margin-right: 80px;
 }
 .footer-content-links {
     margin-top: 44px;
-    margin-right: 120px;
+    margin-right: 80px;
   
 }
 .footer-cotact-links {
     margin-top: 44px;
-    margin-right: 120px;
+    margin-right: 80px;
 }
 
 .footer-news-links{
     margin-top: 44px;
+    width: 290px;
 }
 
 .link {
@@ -41,16 +42,35 @@
     font-size: 15px;
     font-weight: bold;
     margin-top: 10px;
-    padding: 8px 8px;
+    padding: 8px 6px;
     border: none;
-    /* Menghilangkan border */
     border-radius: 9px;
-    /* Menentukan tingkat melengkung pada sudut */
-    transition: color 0.3s, background-color 0.3s, border 0.3s;
+    transition: color 0.3s, background-color 0.3s, border 0.3s, padding 0.3s;
 }
 
 .link:hover {
-    color: #ffffff;
-    background-color: #3366cc;
-    border: 1px solid #3366cc;
+    color: #000000;
+    background-color: #E2EAEF;
+    border: 1px solid #E2EAEF;
+    padding: 8px 19px;
+}
+.logo-contact {
+    width: 50px;
+    height: 30px;
+    margin-right: 10px;
+}
+.logo-contact2 {
+    width: 30px;
+    height: 30px;
+    margin-right: 12px;
+}
+.logo-contact3 {
+    width: 30px;
+    height: 30px;
+    margin-right: 12px;
+}
+.font-contact {
+    font-weight: bold;
+    width: 270px;
+    margin-top: 7px;
 }

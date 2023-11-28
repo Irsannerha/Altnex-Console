@@ -319,8 +319,8 @@ function Beranda() {
           <h4>PlayStation 5</h4>
         </div>
         <CardCarouselPS5 />
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
