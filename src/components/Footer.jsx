@@ -62,7 +62,7 @@ function Footer() {
                   stroke-linejoin="round"
                 />
               </svg>
-              <p>Dummy, IDN 2023 Way Huwi, Lampung Selatan</p>
+              <p>Dummy address, IDN 2023 Way Nyasar, Lampung Selatan</p>
             </div>
             <div className="d-flex font-contact">
               <svg
