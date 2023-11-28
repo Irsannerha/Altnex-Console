@@ -34,19 +34,23 @@
 .footer-news-links{
     margin-top: 32px;
 }
+
 .link {
     text-decoration: none;
     color: #000000;
     font-size: 15px;
     font-weight: bold;
     margin-top: 10px;
-    transition: color 0.3s;
-    /* Efek transisi hanya untuk perubahan warna */
+    padding: 8px 8px;
+    border: none;
+    /* Menghilangkan border */
+    border-radius: 9px;
+    /* Menentukan tingkat melengkung pada sudut */
+    transition: color 0.3s, background-color 0.3s, border 0.3s;
 }
 
 .link:hover {
-    color: #3366cc;
-    /* Warna yang berbeda ketika dihover */
-    text-decoration: none;
-    /* Tidak ada underline ketika dihover */
+    color: #ffffff;
+    background-color: #3366cc;
+    border: 1px solid #3366cc;
 }
