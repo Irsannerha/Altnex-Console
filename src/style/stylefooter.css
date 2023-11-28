@@ -6,20 +6,31 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     height: 450px
 }
-.footer-logo {
-    width: 35%;
-    height: 85%;
+.logoAlt {
+    width: 304px;
+    height: 137px;
 }
 .footer-title {
-    font-size: 25px;
+    font-size: 18px;
     font-weight: bold;
     color: #000000;
-    margin-top: 42px;
+    margin-top: 37px;
     margin-left: 10px;
 }
-.footer-content-links {
-    background-color: #ffffff;
+.footer-logo{
+    width: 430px;
+    margin-right: 50px;
 }
-.footer-content-link {
-    background-color: #790000;
+.footer-content-links {
+    margin-top: 32px;
+    margin-right: 50px;
+  
+}
+.footer-cotact-links {
+    margin-top: 32px;
+    margin-right: 50px;
+}
+
+.footer-news-links{
+    margin-top: 32px;
 }
