@@ -1,0 +1,25 @@
+.footer-card {
+    background-color: #FFB031;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    margin-top: 70px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 450px
+}
+.footer-logo {
+    width: 35%;
+    height: 85%;
+}
+.footer-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 42px;
+    margin-left: 10px;
+}
+.footer-content-links {
+    background-color: #ffffff;
+}
+.footer-content-link {
+    background-color: #790000;
+}

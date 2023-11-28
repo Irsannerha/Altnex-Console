@@ -122,6 +122,7 @@ function Beranda() {
                   style={{
                     textAlign: "center",
                     fontWeight: "bold",
+                    fontSize: "17px",
                     margin: "-10px",
                   }}
                 >
@@ -157,6 +158,7 @@ function Beranda() {
                   style={{
                     textAlign: "center",
                     fontWeight: "bold",
+                    fontSize: "17px",
                     margin: "-10px",
                   }}
                 >
@@ -192,6 +194,7 @@ function Beranda() {
                   style={{
                     textAlign: "center",
                     fontWeight: "bold",
+                    fontSize: "17px",
                     margin: "-10px",
                   }}
                 >
@@ -227,6 +230,7 @@ function Beranda() {
                   style={{
                     textAlign: "center",
                     fontWeight: "bold",
+                    fontSize: "17px",
                     margin: "-10px",
                   }}
                 >
