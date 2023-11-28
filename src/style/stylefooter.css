@@ -4,7 +4,7 @@
     border-top-left-radius: 25px;
     margin-top: 70px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    height: 350px
+    height: 450px
 }
 .logoAlt {
     width: 304px;
@@ -73,4 +73,94 @@
     font-weight: bold;
     width: 270px;
     margin-top: 7px;
+}
+form {
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 50px;
+    margin-top: 5px;
+
+}
+form .logo-contact2 {
+    font-size: 18px;
+    margin-right: 10px;
+
+}
+form input {
+    width: 100%;
+    background: transparent;
+    color: #000000;
+    border: 0;
+    outline: none;
+    
+}
+form button {
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+form svg {
+    font-size: 12px;
+    margin-right: 0px;
+    width: 25px;
+    height: 25px;
+}
+.card-img {
+    width: 150px;
+    height: 150px;
+    margin: -19px;
+    margin-left: 2px;
+}
+
+.card-long {
+    width: 100%;
+}
+.copyright {
+    margin-left: 65px;
+    font-weight: 600;
+}
+.card-go {
+    width:  65px;
+    height: 65px;
+    margin-left: 23%;
+}
+.card-text-1,
+.card-text-2 {
+    text-decoration: none;
+    font-weight: 600;
+    color: #000000;
+}
+
+.card-text-1 {
+    margin-left: 180px;
+}
+
+.card-text-2 {
+    margin-left: 15px;
+}
+
+.icon-plane {
+    width: 40px;
+    height: 40px;
+    margin-left: 5%;
+}
+.icon-tiktok {
+    width: 40px;
+    height: 45px;
+    margin-left: 1%;
+}
+.icon-ig {
+    width: 40px;
+    height: 40px;
+    margin-left: 1%;
+}
+.icon-dc {
+    width: 40px;
+    height: 40px;
+    margin-left: 1.5%;
 }
