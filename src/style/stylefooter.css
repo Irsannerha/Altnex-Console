@@ -8,13 +8,13 @@
 }
 .logoAlt {
     width: 304px;
-    height: 137px;
+    height: 155px;
 }
 .footer-title {
     font-size: 18px;
     font-weight: bold;
     color: #000000;
-    margin-top: 37px;
+    margin-top: 50px;
     margin-left: 10px;
 }
 .footer-logo{
@@ -33,4 +33,20 @@
 
 .footer-news-links{
     margin-top: 32px;
+}
+.link {
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: color 0.3s;
+    /* Efek transisi hanya untuk perubahan warna */
+}
+
+.link:hover {
+    color: #3366cc;
+    /* Warna yang berbeda ketika dihover */
+    text-decoration: none;
+    /* Tidak ada underline ketika dihover */
 }

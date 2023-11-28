@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import "../style/stylefooter.css";
 import iconLogo from "../assets/img/iconlog.png";
+import iconStickTwo from "../assets/img/iconStickTwo.png";
 
 function Footer() {
   return (
@@ -22,11 +23,11 @@ function Footer() {
             </p>
           </div>
           <div className="footer-content-links d-flex flex-column align-items-left justify-content-left ">
-            <h5>USEFUL LINKS</h5>
-          <a href="">Home</a>
-          <a href="">Home</a>
-          <a href="">Home</a>
-          <a href="">Home</a>
+            <h5>USEFULL LINKS</h5>
+          <a className="link" href="">Home</a>
+          <a className="link" href="">Profil</a>
+          <a className="link" href="">Produk</a>
+          <a className="link" href="">Login</a>
           </div>
           <div className="footer-cotact-links d-flex flex-column align-items-left justify-content-left ">
             <h5>CONTACT</h5>
