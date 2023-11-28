@@ -21,7 +21,7 @@ function CardCarouselPS4() {
       {carouselData.map((item, index) => (
         <Carousel.Item key={index}>
           <Card border="success" className="text-center card-item">
-            <Card.Img className="card-img" src={item.imageUrl} />
+            <Card.Img className="card-psimg" src={item.imageUrl} />
             <Card.Body>
               <Card.Title className="card-title">{item.title}</Card.Title>
               <Card.Text className="card-text">{item.description}</Card.Text>
