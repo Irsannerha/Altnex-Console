@@ -123,10 +123,11 @@ form svg {
 .copyright {
     margin-left: 65px;
     font-weight: 600;
+    margin-top: 7px;
 }
 .card-go {
-    width:  65px;
-    height: 65px;
+    width:  75px;
+    height: 75px;
     margin-left: 23%;
 }
 .card-text-1,
