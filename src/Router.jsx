@@ -10,6 +10,7 @@ import ForgotPassword from "./page/ForgotPassword";
 import NewPassword from "./page/NewPassword";
 import NotFound from "./page/NotFound";
 import Pemesanan from "./page/Pemesanan";
+import UserBeranda from "./page/UserBeranda";
 
 // import Checkout from "./page/Checkout";
 // import Dashboard from "./page/Dashboard";
@@ -27,6 +28,7 @@ export default function RoutesApp() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/Pemesanan" element={<Pemesanan />} />
+        <Route path="/UserBeranda" element={<UserBeranda />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/kontak" element={<Kontak />} />
         <Route path="/tentang" element={<Tentang />} />

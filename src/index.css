@@ -55,11 +55,33 @@
     margin: 0 2px;
 }
 .title-ps {
-    background: linear-gradient(to right, #000000, #FFB031, #f4bd66,#000000);
+    background: linear-gradient(90deg, #FFB031, #000,#000000,#000,
+        #000000,
+        #FFB031,
+        #f4bd66,
+        #000000,
+        #FFB031,
+        #f4bd66,
+        #FFB031,
+        #f4bd66);
     -webkit-background-clip: text;
+    background-size: 200% 100%;
     color: transparent;
     display: inline-block;
     font-weight: bold;
+    animation: slideAndFade 2s ease infinite;
+}
+
+@keyframes slideAndFade {
+
+    0%,
+    100% {
+        background-position: 100% 0;
+    }
+
+    50% {
+        background-position: 0 0;
+    }
 }
 .nav-text {
     background: linear-gradient(to right, #000000, #FFB031, #f4bd66, #000000);
