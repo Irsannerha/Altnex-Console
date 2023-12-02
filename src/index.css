@@ -68,3 +68,38 @@
     display: inline-block;
     font-weight: 500;
 }
+.error-container {
+    text-align: center;
+}
+
+.error {
+    display: block;
+    margin: 0 auto;
+    width: 750px;
+    height: 650px;
+    object-fit: cover;
+}
+
+@keyframes colorChange {
+    0% {
+        color: #333;
+    }
+
+    50% {
+        color: #ff0000;
+    }
+
+    100% {
+        color: #333;
+    }
+}
+
+.error-container p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    font-size: 25px;
+    animation: colorChange 2s infinite;
+    /* Adjust the animation duration as needed */
+}

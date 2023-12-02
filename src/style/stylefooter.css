@@ -6,10 +6,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     height: 450px
 }
+
 .logoAlt {
     width: 304px;
     height: 155px;
 }
+
 .footer-title {
     font-size: 18px;
     font-weight: bold;
@@ -17,21 +19,24 @@
     margin-top: 50px;
     margin-left: 10px;
 }
-.footer-logo{
+
+.footer-logo {
     width: 430px;
     margin-right: 80px;
 }
+
 .footer-content-links {
     margin-top: 44px;
     margin-right: 80px;
-  
+
 }
+
 .footer-cotact-links {
     margin-top: 44px;
     margin-right: 80px;
 }
 
-.footer-news-links{
+.footer-news-links {
     margin-top: 44px;
     width: 290px;
 }
@@ -54,27 +59,154 @@
     border: 1px solid #E2EAEF;
     padding: 8px 19px;
 }
+
 .logo-contact {
     width: 50px;
     height: 30px;
     margin-right: 10px;
 }
+
 .logo-contact2 {
     width: 30px;
     height: 30px;
     margin-right: 12px;
 }
+
 .logo-contact3 {
     width: 30px;
     height: 30px;
     margin-right: 12px;
 }
+
 .font-contact {
     font-weight: bold;
     width: 270px;
     margin-top: 7px;
 }
-form {
+
+.form {
+    padding-bottom: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 2px;
+    margin-top: 3px;
+    background: transparent;
+}
+.img-svg {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+.text-muted {
+    margin-left: 2px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.form-holder {
+    width: 78%;
+    background: transparent;
+    color: #000000;
+    border: 0;
+    outline: none;
+    margin-right: 10px;
+}
+
+
+.arrow {
+    font-size: 12px;
+    margin-right: 0px;
+    width: 25px;
+    height: 25px;
+}
+.button-arrow {
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+.card-ps {
+    width: 120px;
+    height: 120px;
+    margin: -4px;
+    margin-left: 5px;
+}
+.navcol {
+    background-color: #E2EAEF;
+    border: 1px solid #E2EAEF;
+    border-radius: 3px;
+}
+.nav-text-brand {
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 12px;
+}
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.text-nav {
+    font-weight: 600;
+    color: #000000;
+    font-size: 10px;
+}
+.logo-pl {
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+}
+.icon-dc {
+    width: 5px;
+    height: 5px;
+    margin-top: 5px;
+}
+.icon-ig {
+    width: 5px;
+    height: 5px;
+    margin-right: 50px;
+}
+.icon-tiktok {
+    width: 5px;
+    height: 5px;
+    margin-right: 45px;
+}
+.card-go {  
+    width: 70px;
+    height: 70px;
+    margin: -4px;
+    margin-left: 325px;
+}
+.pripol {
+    margin-left: 160px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.term {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* form {
     padding-bottom: 15px;
     display: flex;
     align-items: center;
@@ -84,19 +216,22 @@ form {
     margin-top: 5px;
 
 }
+
 form .logo-contact2 {
     font-size: 18px;
     margin-right: 10px;
 
 }
+
 form input {
     width: 100%;
     background: transparent;
     color: #000000;
     border: 0;
     outline: none;
-    
+
 }
+
 form button {
     background: transparent;
     border: 0;
@@ -109,8 +244,9 @@ form svg {
     margin-right: 0px;
     width: 25px;
     height: 25px;
-}
-.card-img {
+} */
+
+/* .card-ps {
     width: 150px;
     height: 150px;
     margin: -19px;
@@ -120,16 +256,19 @@ form svg {
 .card-long {
     width: 100%;
 }
+
 .copyright {
     margin-left: 65px;
     font-weight: 600;
     margin-top: 7px;
 }
+
 .card-go {
-    width:  75px;
+    width: 75px;
     height: 75px;
     margin-left: 23%;
 }
+
 .card-text-1,
 .card-text-2 {
     text-decoration: none;
@@ -150,18 +289,21 @@ form svg {
     height: 40px;
     margin-left: 5%;
 }
+
 .icon-tiktok {
     width: 40px;
     height: 45px;
     margin-left: 1%;
 }
+
 .icon-ig {
     width: 40px;
     height: 40px;
     margin-left: 1%;
 }
+
 .icon-dc {
     width: 40px;
     height: 40px;
     margin-left: 1.5%;
-}
+} */
