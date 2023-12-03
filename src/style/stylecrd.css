@@ -1,0 +1,73 @@
+.card-items {
+    width: 18.5rem;
+    height: 23.5rem;
+    background-color: #FFFFFF;
+    margin: 20px 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Helvetica', sans-serif;
+}
+
+.card-title,
+.card-text,
+.card-text-count {
+    font-family: 'Helvetica', sans-serif;
+}
+
+.card-img {
+    width: 175px;
+    height: 145px;
+    margin: 25px 0;
+}
+
+.card-title {
+    text-align: center;
+    font-weight: bold;
+    margin-top: -30px;
+    font-size: 20px;
+}
+
+.card-text {
+    text-align: center;
+    font-weight: bold;
+    margin: -10px;
+    font-size: 10px;
+    margin-top: 7px;
+}
+
+.card-text-count {
+    text-align: center;
+    font-weight: bold;
+    margin: -10px;
+    font-size: 25px;
+    margin-top: 15px;
+}
+
+/* Tambahkan gaya untuk rating */
+.rating {
+    display: flex;
+    justify-content: center;
+}
+
+.star {
+    color: #ffd700;
+    font-size: 1.5rem;
+    margin: 3px;
+}
+
+.button {
+    width: 95px;
+    height: 40px;
+    background-color: #FFB031;
+    display: block;
+    color: #252524;
+    font-weight: bold;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.1s ease;
+    border-radius: 100px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -21,10 +21,11 @@ import CardCarouselPS5 from "../components/CardCarouselPS5";
 
 function Beranda() {
   const promoTexts = [
-    "Promo ! Besar-Besaran dapatkan diskon nya sekarang juga!...",
+    "Promo ! Besar-Besaran dapatkan diskon main 2 jam sekarang juga!...",
     "Promo Bulan November!, GRATIS 1 Jam untuk semua game. Buruan Mainkan sekarang juga!...",
     "Sambutlah ! Ajang bergengsi lomba FIFA23. Buruan Ambil Hadiahnya dan Daftar Sekarang juga!...",
     "Telah dibuka Paket Malam. Makin seru dengan harga yang terjangkau!",
+    "Promo Akhir Tahun! Dapatkan diskon nya sekarang juga!...",
   ];
 
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -307,7 +308,7 @@ function Beranda() {
             favourites, and everything in between.
           </p>
         </div>
-        <div className="text-center mt-4" style={{ margin: "20px 0" }}>
+        <div className="text-center mt-4">
           <h4>PlayStation 3</h4>
         </div>
         <CardCarouselPS3 />
