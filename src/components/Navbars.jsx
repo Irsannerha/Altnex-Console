@@ -1,4 +1,5 @@
 import Logo from "../assets/img/logo.png";
+import "../index.css";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -29,7 +30,7 @@ function Navbars() {
         expand="lg"
       >
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand className="nav-text" href="/">
             <img
               alt=""
               src={Logo}
