@@ -30,3 +30,12 @@ class User(Base):
     status = Column(String(255), nullable=False)
 
 Index('user', User.nama, unique=True, mysql_length=255)
+
+
+class Produk(Base):
+    __tablename__ = 'produk'
+    id_produk = Column(String(255), primary_key=True)
+    kategoriPS = Column(String(255), nullable=False)
+    gambar = Column(String(255), nullable=False)
+
+Index('produk', Produk.kategoriPS, unique=True, mysql_length=255)

@@ -8,12 +8,63 @@ from pyramid.httpexceptions import HTTPNotFound
 import pymysql
 from sqlalchemy.exc import DBAPIError
 import json
-from ..models.mymodel import DBSession, User
+from ..models.mymodel import DBSession, User, Produk
 import bcrypt
 
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
 def my_view(request):
     return {'project': 'backend'}
+
+
+
+@view_config(route_name='save_product', request_method='POST', renderer='json')
+def save_product(request):
+    try:
+        data = request.POST
+        id_produk = data['id_produk']
+        kategoriPS = data['kategoriPS']
+        gambar = request.POST['gambar'].file
+
+        # Simpan file gambar di folder publik
+        save_path = f'../src/assets/img/{id_produk}.png'  # Sesuaikan dengan path folder publik
+        with open(save_path, 'wb') as f:
+            f.write(gambar.read())
+
+        # Simpan path gambar di database
+        new_product = Produk(
+            id_produk=id_produk,
+            kategoriPS=kategoriPS,
+            gambar=save_path
+        )
+
+        DBSession.add(new_product)
+        DBSession.flush()
+        DBSession.commit()
+
+        return {"status": "success"}
+
+    except KeyError:
+        return Response('Invalid data', status=400, content_type='application/json')
+    except DBAPIError:
+        return Response('Database error', status=500, content_type='application/json')
+
+
+@view_config(route_name='get_products', renderer='json', request_method='GET')
+def get_products(request):
+    try:
+        # Query all products from the database
+        products = DBSession.query(Produk).all()
+
+        # Convert the product data to a list of dictionaries
+        products_data = [{'id_produk': product.id_produk, 'kategoriPS': product.kategoriPS, 'gambar': product.gambar} for product in products]
+
+        # Return the product data as JSON
+        return {'products': products_data}
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)
+
 
 @view_config(route_name='add_user', request_method='POST', renderer='json')
 def register(request):
@@ -67,7 +118,7 @@ def login(request):
         
         if not email or not password:
             return Response('Missing email or password', status=400) 
-        
+                    
         if not validate_user(email, password):
             return HTTPBadRequest(json_body={'message': 'Invalid username or password'})
 

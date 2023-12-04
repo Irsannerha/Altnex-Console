@@ -16,6 +16,14 @@ function Pemesanan() {
   const switchToExtra = () => {
     setCurrentContent("Extra");
   };
+  
+
+  let contentComponent;
+  if (currentContent === "Deluxe") {
+    contentComponent = <ContenDeluxe />;
+  } else {
+    contentComponent = <ContenExtra />;
+  }
 
   return (
     <div className="mybg">
@@ -73,8 +81,7 @@ function Pemesanan() {
                 Experience all the benefits
               </div>
             </Button>
-            {currentContent === "Deluxe" ? <ContenDeluxe /> : <ContenExtra />}
-
+            {contentComponent}
           </Card.Body>
         </Card>
 

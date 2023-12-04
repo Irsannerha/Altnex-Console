@@ -30,6 +30,8 @@ def main(global_config, **settings):
         config.add_route('login', '/api/login', request_method='POST')
         config.add_route('forgot_password', '/api/forgot_password', request_method='POST')
         config.add_route('new_password', '/api/new_password', request_method='POST')
+        config.add_route('save_product', '/api/save_product', request_method='POST')
+        config.add_route('get_products', '/api/get_products',  request_method='GET')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()
