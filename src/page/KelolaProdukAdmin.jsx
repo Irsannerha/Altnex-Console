@@ -26,7 +26,6 @@ function KelolaProduk() {
   });
 
   useEffect(() => {
-    // Fetch product data when the component mounts
     axios.get("/api/get_products")
       .then(response => setProducts(response.data.products))
       .catch(error => console.error('Error fetching product data:', error));
@@ -53,24 +52,17 @@ function KelolaProduk() {
         },
       });
 
-      // Fetch updated product data after submission
       const response = await axios.get("/api/get_products");
       setProducts(response.data.products);
-
-      // Setelah sukses, tampilkan alert
       setShowAlert(true);
-
-      // Atur kembali nilai state product jika perlu
       setProduct({
         id_produk: "",
         kategoriPS: "",
         gambar: null,
       });
 
-      // Tutup modal
       handleCloseModal();
     } catch (error) {
-      // Handle error
     }
   };
 
