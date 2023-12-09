@@ -26,7 +26,7 @@ def save_product(request):
         gambar = request.POST['gambar'].file
 
         # Simpan file gambar di folder publik
-        save_path = f'../src/assets/img/produk/{id_produk}.png'  # Sesuaikan dengan path folder publik
+        save_path = f'../src/assets/img/produk/{id_produk}.png' 
         with open(save_path, 'wb') as f:
             f.write(gambar.read())
 
