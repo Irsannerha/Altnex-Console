@@ -212,8 +212,7 @@ function KelolaProduk() {
                 <td>{product.id_produk}</td>
                 <td>{product.kategoriPS}</td>
                 <td>
-                  <img src={product.gambar} alt={product.kategoriPS}  width="100"  
-        height="100" />
+                  <img src={product.gambar} alt={product.kategoriPS}  width="100" height="100" />
                 </td>
               <td>
                 <button className="buttonAction">

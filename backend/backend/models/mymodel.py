@@ -28,6 +28,7 @@ class User(Base):
     password = Column(String(255), nullable=False)
     hashed_password = Column(String(255), nullable=False)
     status = Column(String(255), nullable=False)
+    gambar = Column(String(255), nullable=False)
 
 Index('user', User.nama, unique=True, mysql_length=255)
 

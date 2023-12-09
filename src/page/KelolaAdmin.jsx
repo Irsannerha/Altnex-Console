@@ -20,11 +20,10 @@ function KelolaAdmin() {
   const [showAlert, setShowAlert] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [admin, setAdmin] = useState({
-    id_admin: "",
     nama: "",
     email: "",
     password: "",
-    foto: "", // Tambahkan variabel foto
+    foto: "",
   });
 
   useEffect(() => {
@@ -36,7 +35,7 @@ function KelolaAdmin() {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    const newValue = name === "gambar" ? files[0] : value;
+    const newValue = name === "foto" ? files[0] : value;
     setAdmin({ ...admin, [name]: newValue });
   };
 
@@ -44,12 +43,11 @@ function KelolaAdmin() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("id_admin", admin.id_admin);
     formData.append("nama", admin.nama);
     formData.append("email", admin.email);
     formData.append("password", admin.password);
-    formData.append("foto", admin.foto); // Tambahkan path foto ke FormData
-
+    formData.append("foto", admin.foto);
+    
     try {
       await axios.post("/api/save_admin", formData, {
         headers: {
@@ -63,11 +61,10 @@ function KelolaAdmin() {
       setShowAlert(true);
 
       setAdmin({
-        id_admin: "",
         nama: "",
         email: "",
         password: "",
-        foto: "", // Setel foto ke string kosong setelah submit
+        foto: "",
       });
 
       handleCloseModal();
@@ -219,23 +216,26 @@ function KelolaAdmin() {
                 </Alert>
               )}
               <Table responsive="sm">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Foto</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>11</td>
-                    <td>11</td>
-                    <td>11</td>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Foto</th>
+                  <th>Nama</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {admins.map((admin) => (
+                  <tr key={admin.id}>
+                    <td>{admin.id}</td>
+                    <td>
+                      <img src={admin.foto} width="100" height="100" />
+                    </td>
+                    <td>{admin.nama}</td>
+                    <td>{admin.email}</td>
+                    <td>{admin.password}</td>
                     <td>
                       <button className="buttonAction">
                         <svg
@@ -301,8 +301,9 @@ function KelolaAdmin() {
                       </button>
                     </td>
                   </tr>
-                </tbody>
-              </Table>
+                ))}
+              </tbody>
+            </Table>
             </Card.Body>
           </Card>
         </Card.Body>

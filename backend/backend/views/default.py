@@ -26,7 +26,7 @@ def save_product(request):
         gambar = request.POST['gambar'].file
 
         # Simpan file gambar di folder publik
-        save_path = f'../src/assets/img/{id_produk}.png'  # Sesuaikan dengan path folder publik
+        save_path = f'../src/assets/img/produk/{id_produk}.png'  # Sesuaikan dengan path folder publik
         with open(save_path, 'wb') as f:
             f.write(gambar.read())
 
@@ -180,3 +180,54 @@ def new_password(request):
     
     except SQLAlchemyError as e:
         return Response('Database error: ' + str(e), status=500)
+    
+@view_config(route_name='save_admin', request_method='POST', renderer='json')
+def save_admin(request):
+    try:
+        data = request.POST
+        nama = data['nama']
+        email = data['email']
+        password = data['password']
+        gambar = request.POST['foto'].file
+        
+        # Simpan file gambar di folder publik
+        save_path = f'../src/assets/img/profile_picture/{nama}.png'
+        with open(save_path, 'wb') as f:
+            f.write(gambar.read())
+
+        # Hashing password sebelum menyimpan ke database
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        
+        user = DBSession.query(User).filter(User.email == email).first()
+
+        if user:
+            return Response('Email Sudah ada', status=400)
+
+        new_user = User(nama=nama, email=email, password=password, hashed_password= hashed_password, status= "Admin", gambar=save_path)
+
+        DBSession.add(new_user)
+        DBSession.flush()
+        DBSession.commit()
+
+        return {"status": "success"}
+
+    except KeyError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
+    except DBAPIError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})
+    
+@view_config(route_name='get_admin', renderer='json', request_method='GET')
+def get_admin(request):
+    try:
+        # Query all products from the database
+        admins = DBSession.query(User).filter(User.status == "Admin").all()
+
+        # Convert the product data to a list of dictionaries
+        admin_data = [{'id': user.id, 'foto': user.gambar, 'nama': user.nama, 'email' : user.email, 'password': user.password} for user in admins]
+
+        # Return the product data as JSON
+        return {'admins': admin_data}
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)

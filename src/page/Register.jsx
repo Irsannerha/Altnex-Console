@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import backgroundImage from "../assets/img/bg-ps.jpg";
@@ -11,6 +12,7 @@ import logo from "../assets/img/iconlog.png";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -40,6 +42,7 @@ function Register() {
       // Handle response / success
       if (response.data.status === "success") {
         alert("User berhasil ditambahkan");
+        navigate('/login');
       } else {
         alert("Gagal menambahkan User");
       }
