@@ -18,6 +18,7 @@ import SuperAdminMenu from "../components/SuperAdminMenu";
 
 function KelolaAdmin() {
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [admins, setAdmins] = useState([]);
   const [admin, setAdmin] = useState({
     nama: "",
@@ -77,6 +78,19 @@ function KelolaAdmin() {
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleDelete = async (email) => {
+    try {
+      await axios.delete(`/api/hapus_admin?email=${email}`);
+      // Perbarui daftar admin setelah penghapusan
+      const updatedAdmins = admins.filter((admin) => admin.email !== email);
+      setAdmins(updatedAdmins);
+      setShowDeleteAlert(true);
+    } catch (error) {
+      alert("Error deleting admin:", error);
+    }
+  };
+  
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -216,6 +230,15 @@ function KelolaAdmin() {
                 </Alert>
               )}
               <Table responsive="sm">
+              {showDeleteAlert && (
+                <Alert
+                  variant="danger"
+                  onClose={() => setShowDeleteAlert(false)}
+                  dismissible
+                >
+                  Admin berhasil dihapus!
+                </Alert>
+              )}
               <thead>
                 <tr>
                   <th>ID</th>
@@ -237,7 +260,7 @@ function KelolaAdmin() {
                     <td>{admin.email}</td>
                     <td>{admin.password}</td>
                     <td>
-                      <button className="buttonAction">
+                      <button id="edit" className="buttonAction">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="25"
@@ -261,7 +284,7 @@ function KelolaAdmin() {
                           />
                         </svg>
                       </button>
-                      <button className="buttonAction">
+                      <button id="hapus" className="buttonAction" onClick={() => handleDelete(admin.email)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="25"

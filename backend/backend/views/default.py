@@ -29,6 +29,11 @@ def save_product(request):
         save_path = f'../src/assets/img/produk/{id_produk}.png' 
         with open(save_path, 'wb') as f:
             f.write(gambar.read())
+            
+        produk = DBSession.query(Produk).filter(Produk.id_produk == id_produk).first()
+            
+        if produk:
+            return Response('Produk Sudah ada', status=400)
 
         # Simpan path gambar di database
         new_product = Produk(
@@ -231,3 +236,44 @@ def get_admin(request):
     except Exception as e:
         # Handle any exceptions (e.g., database errors)
         return Response('Error: ' + str(e), status=500)
+    
+@view_config(route_name='hapus_admin', renderer='json', request_method='DELETE')
+def hapus_admin(request):
+    try:
+        email = request.params.get('email')
+        delete_query = DBSession.query(User).filter(User.email == email, User.status == 'Admin').first()
+        if delete_query:
+            DBSession.delete(delete_query)
+        else:
+            # Handle kasus di mana user tidak ditemukan
+            return Response("Email Tidak Ada", status=400)
+        DBSession.flush()
+        DBSession.commit()
+        
+        return {"status": "Success"}
+    
+    except KeyError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
+    except DBAPIError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})
+    
+@view_config(route_name='hapus_produk', renderer='json', request_method='DELETE')
+def hapus_produk(request):
+    try:
+        id_produk = request.params.get('id_produk')
+        delete_query = DBSession.query(Produk).filter(Produk.id_produk == id_produk).first()
+        
+        if delete_query:
+            DBSession.delete(delete_query)
+        else:
+            # Handle kasus di mana user tidak ditemukan
+            return Response("Produk Tidak Ada", status=400)
+        DBSession.flush()
+        DBSession.commit()
+        
+        return {"status": "Success"}
+    
+    except KeyError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
+    except DBAPIError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})

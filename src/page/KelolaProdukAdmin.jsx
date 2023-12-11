@@ -67,9 +67,21 @@ function KelolaProduk() {
   };
 
   const [showModal, setShowModal] = useState(false);
-
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleDelete = async (id_produk) => {
+    try {
+      await axios.delete(`/api/hapus_produk?id_produk=${id_produk}`);
+      // Perbarui daftar product setelah penghapusan
+      const updatedProducts = products.filter((product) => product.id_produk !== id_produk);
+      setProducts(updatedProducts);
+      setShowDeleteAlert(true);
+    } catch (error) {
+      alert("Error deleting product:", error);
+    }
+  };
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -143,7 +155,7 @@ function KelolaProduk() {
                 <Modal.Body>
                   <Form>
                     <Form.Group controlId="formNamaProduk">
-                      <Form.Label>Ide Produk</Form.Label>
+                      <Form.Label>Id Produk</Form.Label>
                       <Form.Control
                         type="text"
                         name="id_produk"
@@ -197,6 +209,15 @@ function KelolaProduk() {
             Data berhasil diinputkan!
           </Alert>
         )}
+        {showDeleteAlert && (
+          <Alert
+            variant="danger"
+            onClose={() => setShowDeleteAlert(false)}
+            dismissible
+          >
+            Produk berhasil dihapus!
+          </Alert>
+        )}
         <Table responsive="sm">
           <thead>
             <tr>
@@ -239,7 +260,7 @@ function KelolaProduk() {
                     />
                   </svg>
                 </button>
-                <button className="buttonAction">
+                <button id="hapus" className="buttonAction" onClick={() => handleDelete(product.id_produk)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
