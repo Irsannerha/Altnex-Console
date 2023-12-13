@@ -1,11 +1,14 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy import (
     Column,
     Index,
     Integer,
     Text,
-    String
+    String,
+    DateTime,
+    DECIMAL,
+    ForeignKey
 )
 
 from .meta import Base
@@ -40,3 +43,29 @@ class Produk(Base):
     gambar = Column(String(255), nullable=False)
 
 Index('produk', Produk.kategoriPS, unique=True, mysql_length=255)
+
+class Pembayaran(Base):
+    __tablename__ = 'pembayaran'
+
+    id_pembayaran = Column(String(50), primary_key=True)
+    nama_pembayaran = Column(String(255))
+    no_pembayaran = Column(String(100))
+    
+    pesanan = relationship("Pesanan", back_populates="pembayaran")
+
+class Pesanan(Base):
+    __tablename__ = 'pesanan'
+
+    id_pesanan = Column(Integer, primary_key=True, autoincrement=True)
+    Status = Column(String(255))
+    bukti_transfer = Column(String(255))
+    id_produk = Column(String(255), ForeignKey('produk.id_produk'))
+    id_user = Column(Integer, ForeignKey('user.id_user'))
+    tanggal_booking = Column(DateTime)
+    id_pembayaran = Column(String(255), ForeignKey('pembayaran.id_pembayaran'))
+    lama_booking = Column(Integer)
+    total_harga = Column(DECIMAL(10, 2))
+
+    produk = relationship(Produk, back_populates="pesanan")
+    user = relationship(User, back_populates="pesanan")
+    pembayaran = relationship(Pembayaran, back_populates="pesanan")

@@ -1,8 +1,19 @@
 import { Card, Button, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
 
 function ContenDeluxe() {
+  const [tanggal, setTanggal] = useState('');
+  const [waktu, setWaktu] = useState('');
+  const [durasi, setDurasi] = useState('');
+  const [paymentPlan, setPaymentPlan] = useState('');
+
+  const handleSubmit = () => {
+    // Kirim data ke server atau handle di sini
+    console.log({ tanggal, waktu, durasi, paymentPlan });
+  };
+
   return (
     <div className="d-flex justify-content-center align-item-center">
       <Card
@@ -39,7 +50,7 @@ function ContenDeluxe() {
               }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="date" />
+              <Form.Control type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} />
             </Form.Group>
 
             <Form.Group
@@ -47,14 +58,14 @@ function ContenDeluxe() {
               style={{ textAlign: "left", marginRight: "10px" }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="time" />
+              <Form.Control type="time" value={waktu} onChange={(e) => setWaktu(e.target.value)} />
             </Form.Group>
             <Form.Group
               controlId="formTime"
               style={{ textAlign: "left", width: "60px" }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="number" />
+              <Form.Control id="duration" type="number" value={durasi} onChange={(e) => setDurasi(e.target.value)} />
             </Form.Group>
           </div>
 
@@ -76,7 +87,11 @@ function ContenDeluxe() {
 
       <Card
         className="contenPemesanan boederRadius"
-        style={{ marginLeft: "20px", backgroundColor: "#DFE3E7", height: "380px" }}
+        style={{
+          marginLeft: "20px",
+          backgroundColor: "#DFE3E7",
+          height: "380px",
+        }}
       >
         <Card.Body>
           <Card
@@ -101,9 +116,9 @@ function ContenDeluxe() {
             Choose a payment plan
           </Card.Title>
           <div className="d-flex flex-column align-items-center">
-            <Button className="tombolJenisPembayaran">Dana</Button>
-            <Button className="tombolJenisPembayaran">Gopay</Button>
-            <Button className="tombolJenisPembayaran">ATM/Bank Trasnfer</Button>
+            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar01')}>Dana</Button>
+            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar02')}>Gopay</Button>
+            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar03')}>ATM/Bank Trasnfer</Button>
           </div>
           <div className="d-flex justify-content-center align-item-center mt-4">
             <div style={{ width: "80%" }}>
@@ -115,6 +130,9 @@ function ContenDeluxe() {
                 }}
               >
                 See Usage Terms for details on price changes and how to cancel.
+                <div className="d-flex justify-content-end">
+                  <Button className="cekJadwal" onClick={handleSubmit}>Pay</Button>
+                </div>
               </p>
             </div>
           </div>
