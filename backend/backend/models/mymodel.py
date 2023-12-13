@@ -25,13 +25,15 @@ Index('my_index', MyModel.name, unique=True, mysql_length=255)
 
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    id_user = Column(Integer, primary_key=True)
     nama = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
     hashed_password = Column(String(255), nullable=False)
     status = Column(String(255), nullable=False)
     gambar = Column(String(255), nullable=False)
+    
+    pesanan = relationship("Pesanan", back_populates="user")
 
 Index('user', User.nama, unique=True, mysql_length=255)
 
@@ -41,6 +43,8 @@ class Produk(Base):
     id_produk = Column(String(255), primary_key=True)
     kategoriPS = Column(String(255), nullable=False)
     gambar = Column(String(255), nullable=False)
+    
+    pesanan = relationship("Pesanan", back_populates="produk")
 
 Index('produk', Produk.kategoriPS, unique=True, mysql_length=255)
 
@@ -66,6 +70,6 @@ class Pesanan(Base):
     lama_booking = Column(Integer)
     total_harga = Column(DECIMAL(10, 2))
 
-    produk = relationship(Produk, back_populates="pesanan")
-    user = relationship(User, back_populates="pesanan")
-    pembayaran = relationship(Pembayaran, back_populates="pesanan")
+    produk = relationship("Produk", back_populates="pesanan")
+    user = relationship("User", back_populates="pesanan")
+    pembayaran = relationship("Pembayaran", back_populates="pesanan")
