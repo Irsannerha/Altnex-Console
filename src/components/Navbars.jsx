@@ -3,10 +3,15 @@ import "../index.css";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { useState, useEffect } from "react";
+import Image from "react-bootstrap/Image";
+import Dropdown from "react-bootstrap/Dropdown";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../Context/UserContext";
 
 function Navbars() {
   const [scrolled, setScrolled] = useState(false);
+  const { user, isLoggedIn } = useContext(UserContext);
+  const { setUser, setIsLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +27,28 @@ function Navbars() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </a>
+  ));
+
+  const handleLogout = () => {
+    // Proses logout: Menghapus data dari localStorage, mengatur UserContext
+    localStorage.removeItem('user');
+    localStorage.removeItem('isLoggedIn');
+    setUser(null);
+    setIsLoggedIn(false);
+  };
+  
 
   return (
     <>
@@ -52,9 +79,30 @@ function Navbars() {
               <Nav.Link href="#kontak" className="me-3">
                 Kontak
               </Nav.Link>
-              <Nav.Link href="/login" style={{ fontWeight: "bold" }}>
-                Login
-              </Nav.Link>
+              {
+                isLoggedIn ? (
+                  <Dropdown>
+                    <Dropdown.Toggle as={CustomToggle}>
+                      <Image
+                        src={user.gambar}
+                        roundedCircle
+                        className="profile-pic"
+                      />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                      <Dropdown.Item onClick={handleLogout}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  <Nav.Link href="/login" style={{ fontWeight: "bold" }}>
+                    Login
+                  </Nav.Link>
+                )
+              }
             </Nav>
           </Navbar.Collapse>
         </Container>

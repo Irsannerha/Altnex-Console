@@ -34,6 +34,7 @@ def main(global_config, **settings):
         config.add_route('get_products', '/api/get_products',  request_method='GET')
         config.add_route('save_admin', '/api/save_admin', request_method='POST')
         config.add_route('get_admin', '/api/get_admin',  request_method='GET')
+        config.add_route('get_user', '/api/get_user',  request_method='GET')
         config.add_route('hapus_admin', '/api/hapus_admin', request_method='DELETE')
         config.add_route('hapus_produk', '/api/hapus_produk', request_method='DELETE')
         config.include('.routes')

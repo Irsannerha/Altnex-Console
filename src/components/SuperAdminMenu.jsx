@@ -4,10 +4,32 @@ import {
   Button,
 } from "react-bootstrap";
 import iconLogo from "../assets/img/iconlog.png";
-
-
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../Context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function SuperAdminMenu() {
+  const navigate = useNavigate();
+  const { setUser, setIsLoggedIn } = useContext(UserContext);
+
+  const handleLogout = () => {
+    // Proses logout: Menghapus data dari localStorage, mengatur UserContext
+    localStorage.removeItem('user');
+    localStorage.removeItem('isLoggedIn');
+    setUser(null);
+    setIsLoggedIn(false);
+    navigate('/login')
+  };
+
+  const handleNavigateToKelolaProduk = () => {
+    navigate('/KelolaProduk');
+  };
+
+  const handleNavigateToKelolaAdmin = () => {
+    navigate('/KelolaAdmin');
+  };
+  
+  
   return (
       <Card className="menuAdmin d-flex flex-column align-items-center">
         <Card.Body>
@@ -57,7 +79,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Kelola Admin</Button>
+              <Button className="tombolMenu" onClick={handleNavigateToKelolaAdmin}>Kelola Admin</Button>
             </div>
             <div>
               <svg
@@ -88,7 +110,7 @@ function SuperAdminMenu() {
                   stroke-linejoin="round"
                 />
               </svg>
-              <Button className="tombolMenu">Kelola Produk</Button>
+              <Button className="tombolMenu" onClick={handleNavigateToKelolaProduk }>Kelola Produk</Button>
             </div>
             <div className="d-flex justify-content-left align-item-left">
               <svg
@@ -156,7 +178,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Log Out</Button>
+              <Button className="tombolMenu" onClick={handleLogout}>Log Out</Button>
             </div>
           </div>
         </Card.Body>

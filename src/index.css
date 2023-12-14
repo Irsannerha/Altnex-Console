@@ -125,3 +125,9 @@
     animation: colorChange 2s infinite;
     /* Adjust the animation duration as needed */
 }
+
+.profile-pic {
+    width: 40px; /* Atur lebar gambar */
+    height: 40px; /* Atur tinggi gambar */
+    object-fit: cover; /* Pastikan gambar menutupi area tanpa distorsi */
+  }

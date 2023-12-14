@@ -1,24 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
-
+import { Link, useNavigate } from "react-router-dom"; // Sesuaikan dengan cara Anda menangani rute
+import { UserContext } from "../Context/UserContext.jsx";
 import backgroundImage from "../assets/img/bg-ps.jpg";
 import logo from "../assets/img/iconlog.png";
 
 function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUser, setIsLoggedIn } = useContext(UserContext);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [user, setUser] = useState(null);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const getUserDataFromServer = async (email) => {
+    try {
+        const response = await fetch(`/api/get_user?email=${email}`, { // Sesuaikan dengan parameter yang dibutuhkan
+            method: 'GET',
+            headers: {
+                // Tambahkan headers jika diperlukan
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_TOKEN_HERE',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Server Error: ${response.status} - ${errorData.message}`);
+        }
+
+        const userData = await response.json();
+        return userData;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error;
+    }
+};
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, password)
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -29,7 +55,19 @@ function Login() {
       });
 
       if (response.ok) {
+        const userData = await getUserDataFromServer(email);
+        setUser(userData);
+        setIsLoggedIn(true);
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('isLoggedIn', 'true');
+        if (userData.status === 'Admin') {
+          navigate('/KelolaAdmin');
+        } else if (userData.status === 'Member') {
+          navigate('/');
+        }
+
         alert("Login Berhasil")
+        
       } else {
         const errorData = await response.json();
         alert(errorData.message || "Login failed");

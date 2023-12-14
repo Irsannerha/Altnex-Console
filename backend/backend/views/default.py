@@ -228,7 +228,7 @@ def get_admin(request):
         admins = DBSession.query(User).filter(User.status == "Admin").all()
 
         # Convert the product data to a list of dictionaries
-        admin_data = [{'id': user.id, 'foto': user.gambar, 'nama': user.nama, 'email' : user.email, 'password': user.password} for user in admins]
+        admin_data = [{'id_user': user.id_user, 'foto': user.gambar, 'nama': user.nama, 'email' : user.email, 'password': user.password} for user in admins]
 
         # Return the product data as JSON
         return {'admins': admin_data}
@@ -277,3 +277,14 @@ def hapus_produk(request):
         return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
     except DBAPIError:
         return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})
+    
+@view_config(route_name='get_user', renderer='json')
+def get_user(request):
+    email = request.params.get('email')
+    user = DBSession.query(User).filter(User.email == email).first()
+
+    if not user:
+        return Response('User not found', status=400)
+
+    # Pastikan semua atribut yang Anda akses ada
+    return {'id_user': user.id_user, 'status': user.status, 'email': user.email, 'gambar': user.gambar}

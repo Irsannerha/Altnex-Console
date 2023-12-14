@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../index.css";
 import "../style/style.css";
 import Navbars from "../components/Navbars";
@@ -17,9 +17,10 @@ import iconRent from "../assets/img/iconRent.png";
 import backgroundImage from "../assets/img/bgGold.jpg";
 import iconLogo from "../assets/img/iconlog.png";
 import CardCarouselPS5 from "../components/CardCarouselPS5";
-
+import { UserContext } from "../Context/UserContext";
 
 function Beranda() {
+  const { user, isLoggedIn } = useContext(UserContext);
   const promoTexts = [
     "Promo ! Besar-Besaran dapatkan diskon main 2 jam sekarang juga!...",
     "Promo Bulan November!, GRATIS 1 Jam untuk semua game. Buruan Mainkan sekarang juga!...",
