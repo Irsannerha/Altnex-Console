@@ -35,11 +35,19 @@ def save_product(request):
         if produk:
             return Response('Produk Sudah ada', status=400)
 
+        if kategoriPS == "Playstation 3":
+            harga_sewa = 5000
+        elif kategoriPS == "Playstation 4":
+            harga_sewa = 10000
+        elif kategoriPS == "Playstation 5":
+            harga_sewa = 15000
+            
         # Simpan path gambar di database
         new_product = Produk(
             id_produk=id_produk,
             kategoriPS=kategoriPS,
-            gambar=save_path
+            gambar=save_path,
+            harga_sewa = harga_sewa
         )
 
         DBSession.add(new_product)
@@ -70,6 +78,54 @@ def get_products(request):
         # Handle any exceptions (e.g., database errors)
         return Response('Error: ' + str(e), status=500)
 
+
+@view_config(route_name='get_ps5', renderer='json', request_method='GET')
+def get_ps5(request):
+    try:
+        # Query all products from the database
+        products = DBSession.query(Produk).filter(Produk.kategoriPS == "Playstation 5").all()
+
+        # Convert the product data to a list of dictionaries
+        products_data = [{'id_produk': product.id_produk, 'kategoriPS': product.kategoriPS, 'gambar': product.gambar, 'harga_sewa': product.harga_sewa} for product in products]
+
+        # Return the product data as JSON
+        return {'products': products_data}
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)
+    
+@view_config(route_name='get_ps4', renderer='json', request_method='GET')
+def get_ps4(request):
+    try:
+        # Query all products from the database
+        products = DBSession.query(Produk).filter(Produk.kategoriPS == "Playstation 4").all()
+
+        # Convert the product data to a list of dictionaries
+        products_data = [{'id_produk': product.id_produk, 'kategoriPS': product.kategoriPS, 'gambar': product.gambar, 'harga_sewa': product.harga_sewa} for product in products]
+
+        # Return the product data as JSON
+        return {'products': products_data}
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)
+    
+@view_config(route_name='get_ps3', renderer='json', request_method='GET')
+def get_ps3(request):
+    try:
+        # Query all products from the database
+        products = DBSession.query(Produk).filter(Produk.kategoriPS == "Playstation 3").all()
+
+        # Convert the product data to a list of dictionaries
+        products_data = [{'id_produk': product.id_produk, 'kategoriPS': product.kategoriPS, 'gambar': product.gambar, 'harga_sewa': product.harga_sewa} for product in products]
+
+        # Return the product data as JSON
+        return {'products': products_data}
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)
 
 @view_config(route_name='add_user', request_method='POST', renderer='json')
 def register(request):

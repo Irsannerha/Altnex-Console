@@ -1,78 +1,76 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import "../style/stylecrd.css";
-import iconPs from "../assets/img/ps3cons.png";
-
-const carouselData = [
-  {
-    title: "Sony PlayStation 3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!",
-    price: "Rp.5000",
-    rating: 5,
-    imageUrl: iconPs,
-  },
-  {
-    title: "Sony PlayStation 3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!",
-    price: "Rp.5000",
-    rating: 5,
-    imageUrl: iconPs,
-  },
-  {
-    title: "Sony PlayStation 3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!",
-    price: "Rp.5000",
-    rating: 5,
-    imageUrl: iconPs,
-  },
-  {
-    title: "Sony PlayStation 3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!",
-    price: "Rp.5000",
-    rating: 5,
-    imageUrl: iconPs,
-  },
-];
+import "../style/stylecard.css";
+import iconPs from "../assets/img/ps5cons.png";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import axios from "axios";
 
 function CardCarouselPS3() {
+  const [carouselData, setCarouselData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/get_ps3")
+      .then((response) => setCarouselData(response.data.products))
+      .catch((error) => console.error("Error fetching product data:", error));
+  }, []);
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      partialVisibilityGutter: 10, // Nilai yang lebih kecil
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      partialVisibilityGutter: 10, // Nilai yang lebih kecil
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      partialVisibilityGutter: 5, // Nilai yang lebih kecil
+    },
+  };
   return (
-    <div className="card-container">
-      {carouselData.map((item, index) => (
-        <Card key={index} border="success" className="text-center card-items">
-          <Card.Img className="card-img" src={item.imageUrl} />
+    <Carousel responsive={responsive}>
+      {carouselData.map((item) => (
+        <Card
+          key={item.id_produk}
+          border="success"
+          className="text-center card-item"
+        >
+          <Card.Img className="card-img" src={item.gambar} />
           <Card.Body>
-            <Card.Title className="card-title">{item.title}</Card.Title>
-            <Card.Text className="card-text">{item.description}</Card.Text>
-            <Card.Text className="card-text-count">{item.price}</Card.Text>
+            <Card.Title className="card-title">{item.kategoriPS}</Card.Title>
+            <Card.Text className="card-text">Lorem Ipsum Dolor....</Card.Text>
+            <Card.Text className="card-text-count">Rp. {item.harga_sewa}</Card.Text>
             <div className="rating">
               {[...Array(item.rating)].map((_, i) => (
                 <span key={i} className="star">
                   &#9733;
+                  &#9733;
+                  &#9733;
+                  &#9733;
+                  &#9733;
                 </span>
               ))}
             </div>
-            <div>
-              <Button
-                className="button"
-                type="submit"
-                href="/pemesanan"
-                onMouseOver={(e) =>
-                  (e.target.style.backgroundColor = "#3DB5FF")
-                }
-                onMouseOut={(e) => (e.target.style.backgroundColor = "#FFB031")}
-              >
-                Sewa
-              </Button>
-            </div>
+            <Button
+              className="button"
+              type="submit"
+              href="/pemesanan"
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#3DB5FF")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#FFB031")}
+            >
+              Sewa
+            </Button>
           </Card.Body>
         </Card>
       ))}
-    </div>
+    </Carousel>
   );
 }
 

@@ -8,7 +8,8 @@ from sqlalchemy import (
     String,
     DateTime,
     DECIMAL,
-    ForeignKey
+    ForeignKey,
+    Float
 )
 
 from .meta import Base
@@ -43,6 +44,7 @@ class Produk(Base):
     id_produk = Column(String(255), primary_key=True)
     kategoriPS = Column(String(255), nullable=False)
     gambar = Column(String(255), nullable=False)
+    harga_sewa = Column(Float, nullable=False)
     
     pesanan = relationship("Pesanan", back_populates="produk")
 
