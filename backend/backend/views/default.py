@@ -8,7 +8,7 @@ from pyramid.httpexceptions import HTTPNotFound
 import pymysql
 from sqlalchemy.exc import DBAPIError
 import json
-from ..models.mymodel import DBSession, User, Produk
+from ..models.mymodel import DBSession, User, Produk, Pesanan, Pembayaran
 import bcrypt
 
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
@@ -360,3 +360,24 @@ def get_products_specifics(request):
     except Exception as e:
         # Terjadi kesalahan lain, kembalikan pesan error
         return Response(json_body={'error': 'Error: ' + str(e)}, status=500)
+    
+@view_config(route_name='create_order', renderer='json', request_method='POST')
+def create_order(request):
+    try:
+        data = request.json_body
+        new_order = Pesanan(
+            Status="Pending",
+            bukti_transfer=data['bukti_transfer'],
+            id_produk=data['id_produk'],
+            id_user=data['id_user'],
+            tanggal_booking= data['tanggal_booking'],
+            id_pembayaran=data['id_pembayaran'],
+            lama_booking=data['lama_booking'],
+            total_harga=data['total_harga']
+        )
+        DBSession.add(new_order)
+        DBSession.flush()
+        DBSession.commit()
+        return {'success': True, 'id_pesanan': new_order.id_pesanan}
+    except Exception as e:
+        return {'success': False, 'error': str(e)}

@@ -70,7 +70,7 @@ class Pesanan(Base):
     tanggal_booking = Column(DateTime)
     id_pembayaran = Column(String(255), ForeignKey('pembayaran.id_pembayaran'))
     lama_booking = Column(Integer)
-    total_harga = Column(DECIMAL(10, 2))
+    total_harga = Column(Float)
 
     produk = relationship("Produk", back_populates="pesanan")
     user = relationship("User", back_populates="pesanan")

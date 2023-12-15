@@ -1,22 +1,24 @@
 import { Card, Button, Form } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../Context/UserContext";
 
 function ContenDeluxe() {
-  const [tanggal, setTanggal] = useState('');
-  const [waktu, setWaktu] = useState('');
-  const [durasi, setDurasi] = useState('');
-  const [paymentPlan, setPaymentPlan] = useState('');
+  const { user, isLoggedIn } = useContext(UserContext);
+  const [tanggal, setTanggal] = useState("");
+  const [waktu, setWaktu] = useState("");
+  const [durasi, setDurasi] = useState("");
+  const [paymentPlan, setPaymentPlan] = useState("");
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   useEffect(() => {
     axios
       .get(`/api/get_products/${id}`)
       .then((response) => {
-        setProduct(response.data.products);
+        setProduct(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -24,8 +26,38 @@ function ContenDeluxe() {
   }, [id]);
 
   const handleSubmit = () => {
-    // Kirim data ke server atau handle di sini
-    console.log({ tanggal, waktu, durasi, paymentPlan });
+    if (!product || !product.harga_sewa) {
+      console.error("Informasi produk tidak lengkap");
+      return;
+    }
+
+    const totalHarga = product.harga_sewa * parseInt(durasi, 10);
+    const tanggalWaktu = `${tanggal} ${waktu}:00`;
+
+    const orderData = {
+      bukti_transfer: "",
+      id_produk: id,
+      id_user: user.id_user,
+      tanggal_booking: tanggalWaktu,
+      id_pembayaran: paymentPlan,
+      lama_booking: parseInt(durasi, 10),
+      total_harga: totalHarga,
+    };
+
+    console.log(orderData)
+
+    axios
+      .post("/api/create_order", orderData)
+      .then(response => {
+        if (response.data.success) {
+          alert('Pesanan berhasil dibuat dengan ID:', response.data.id_pesanan);
+        } else {
+          alert('Gagal membuat pesanan:', response.data.error);
+        }
+      })
+      .catch(error => {
+        alert('Error submitting order:', error);
+      });
   };
 
   return (
@@ -64,7 +96,11 @@ function ContenDeluxe() {
               }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} />
+              <Form.Control
+                type="date"
+                value={tanggal}
+                onChange={(e) => setTanggal(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group
@@ -72,14 +108,23 @@ function ContenDeluxe() {
               style={{ textAlign: "left", marginRight: "10px" }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="time" value={waktu} onChange={(e) => setWaktu(e.target.value)} />
+              <Form.Control
+                type="time"
+                value={waktu}
+                onChange={(e) => setWaktu(e.target.value)}
+              />
             </Form.Group>
             <Form.Group
               controlId="formTime"
               style={{ textAlign: "left", width: "60px" }}
             >
               <Form.Label></Form.Label>
-              <Form.Control id="duration" type="number" value={durasi} onChange={(e) => setDurasi(e.target.value)} />
+              <Form.Control
+                id="duration"
+                type="number"
+                value={durasi}
+                onChange={(e) => setDurasi(e.target.value)}
+              />
             </Form.Group>
           </div>
 
@@ -130,9 +175,24 @@ function ContenDeluxe() {
             Choose a payment plan
           </Card.Title>
           <div className="d-flex flex-column align-items-center">
-            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar01')}>Dana</Button>
-            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar02')}>Gopay</Button>
-            <Button className="tombolJenisPembayaran" onClick={() => setPaymentPlan('bayar03')}>ATM/Bank Trasnfer</Button>
+            <Button
+              className="tombolJenisPembayaran"
+              onClick={() => setPaymentPlan("bayar01")}
+            >
+              Dana
+            </Button>
+            <Button
+              className="tombolJenisPembayaran"
+              onClick={() => setPaymentPlan("bayar02")}
+            >
+              Gopay
+            </Button>
+            <Button
+              className="tombolJenisPembayaran"
+              onClick={() => setPaymentPlan("bayar03")}
+            >
+              ATM/Bank Trasnfer
+            </Button>
           </div>
           <div className="d-flex justify-content-center align-item-center mt-4">
             <div style={{ width: "80%" }}>
@@ -145,7 +205,9 @@ function ContenDeluxe() {
               >
                 See Usage Terms for details on price changes and how to cancel.
                 <div className="d-flex justify-content-end">
-                  <Button className="cekJadwal" onClick={handleSubmit}>Pay</Button>
+                  <Button className="cekJadwal" onClick={handleSubmit}>
+                    Pay
+                  </Button>
                 </div>
               </p>
             </div>
