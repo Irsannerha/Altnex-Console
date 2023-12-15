@@ -40,6 +40,7 @@ def main(global_config, **settings):
         config.add_route('get_ps5', '/api/get_ps5',  request_method='GET')
         config.add_route('get_ps4', '/api/get_ps4',  request_method='GET')
         config.add_route('get_ps3', '/api/get_ps3',  request_method='GET')
+        config.add_route('get_products_specifics', '/api/get_products/{id_produk}', request_method='GET')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()

@@ -4,9 +4,23 @@ import "../style/style.css";
 import gameOver from "../assets/img/gameOver.png";
 import ContenDeluxe from "../components/ContenDeluxe";
 import ContenExtra from "../components/ContenExtra";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Pemesanan() {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`/api/get_products/${id}`)
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, [id]);
   const [currentContent, setCurrentContent] = useState("Deluxe");
 
   const switchToDeluxe = () => {

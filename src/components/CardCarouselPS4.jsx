@@ -6,7 +6,10 @@ import iconPs from "../assets/img/ps5cons.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function CardCarouselPS4() {
+  const navigate = useNavigate();
   const [carouselData, setCarouselData] = useState([]);
 
   useEffect(() => {
@@ -33,6 +36,11 @@ function CardCarouselPS4() {
       partialVisibilityGutter: 5, // Nilai yang lebih kecil
     },
   };
+
+  const handleProductClick = (id_produk) => {
+    navigate(`/pemesanan/${id_produk}`);
+  };
+
   return (
     <Carousel responsive={responsive}>
       {carouselData.map((item) => (
@@ -59,8 +67,8 @@ function CardCarouselPS4() {
             </div>
             <Button
               className="button"
-              type="submit"
-              href="/pemesanan"
+              type="button"
+              onClick={() => handleProductClick(item.id_produk)}
               onMouseOver={(e) => (e.target.style.backgroundColor = "#3DB5FF")}
               onMouseOut={(e) => (e.target.style.backgroundColor = "#FFB031")}
             >

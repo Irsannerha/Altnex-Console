@@ -27,7 +27,6 @@ function Login() {
             headers: {
                 // Tambahkan headers jika diperlukan
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer YOUR_TOKEN_HERE',
             },
         });
 

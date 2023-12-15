@@ -1,14 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ContenExtra() {
   const [selectedPrice, setSelectedPrice] = useState(0);
-
   const handlePriceSelection = (price) => {
     setSelectedPrice(price);
   };
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`/api/get_products/${id}`)
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, [id]);
+
+  let prices = { regular: 10000, ac: 20000, vip: 30000 };
+  if (product && product.kategoriPS === "Playstation 5") {
+    prices = { regular: 30000, ac: 40000, vip: 50000 };
+  }else if (product && product.kategoriPS === "Playstation 4") {
+    prices = { regular: 20000, ac: 30000, vip: 40000 };
+  }else if (product && product.kategoriPS === "Playstation 5"){
+    prices = { regular: 10000, ac: 20000, vip: 30000 };
+  }
 
   const handlePayment = () => {
     // Kode untuk mengirimkan data ke database
@@ -72,12 +94,10 @@ function ContenExtra() {
                   <div className="d-flex flex-column align-items-center">
                     <p style={{fontSize: "12px", marginBottom: "-1px"}}>Cigarette room</p>
                     <Button
-                      className={`hargaButton ${
-                        selectedPrice === 10000 && "selected"
-                      }`}
-                      onClick={() => handlePriceSelection(10000)}
+                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
+                      onClick={() => handlePriceSelection(prices.regular)}
                     >
-                      10000
+                      {prices.regular}
                     </Button>
                     <p className="durasiPaketExtra">09:00 PM s.d 05:30 AM</p>
                   </div>
@@ -85,12 +105,10 @@ function ContenExtra() {
                   <div className="d-flex flex-column align-items-center">
                     <p style={{fontSize: "12px", marginBottom: "-1px"}}>AC room</p>
                     <Button
-                      className={`hargaButton ${
-                        selectedPrice === 25000 && "selected"
-                      }`}
-                      onClick={() => handlePriceSelection(25000)}
+                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
+                      onClick={() => handlePriceSelection(prices.regular)}
                     >
-                      25000
+                      {prices.ac}
                     </Button>
                     <p className="durasiPaketExtra">09:00 PM s.d 05:30 AM</p>
                   </div>
@@ -98,12 +116,10 @@ function ContenExtra() {
                   <div  className="d-flex flex-column align-items-center">
                     <p style={{fontSize: "12px", marginBottom: "-1px"}}>VIP room</p>
                     <Button
-                      className={`hargaButton ${
-                        selectedPrice === 30000 && "selected"
-                      }`}
-                      onClick={() => handlePriceSelection(30000)}
+                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
+                      onClick={() => handlePriceSelection(prices.regular)}
                     >
-                      30000
+                      {prices.vip}
                     </Button>
                     <p className="durasiPaketExtra">09:00 PM s.d 05:30 AM</p>
                   </div>

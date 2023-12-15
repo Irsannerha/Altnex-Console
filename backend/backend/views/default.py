@@ -78,7 +78,6 @@ def get_products(request):
         # Handle any exceptions (e.g., database errors)
         return Response('Error: ' + str(e), status=500)
 
-
 @view_config(route_name='get_ps5', renderer='json', request_method='GET')
 def get_ps5(request):
     try:
@@ -344,3 +343,20 @@ def get_user(request):
 
     # Pastikan semua atribut yang Anda akses ada
     return {'id_user': user.id_user, 'status': user.status, 'email': user.email, 'gambar': user.gambar}
+
+@view_config(route_name='get_products_specifics', renderer='json', request_method='GET')
+def get_products_specifics(request):
+    try:
+        id_produk = request.matchdict['id_produk']
+        products = DBSession.query(Produk).filter(Produk.id_produk == id_produk).first()
+
+        if products is None:
+            # Produk tidak ditemukan, kembalikan pesan error
+            return Response(json_body={'error': 'Product not found'}, status=404)
+
+        # Produk ditemukan, kembalikan detail produk
+        return {'id_produk': products.id_produk, 'kategoriPS': products.kategoriPS, 'gambar': products.gambar, 'harga_sewa': products.harga_sewa}
+
+    except Exception as e:
+        # Terjadi kesalahan lain, kembalikan pesan error
+        return Response(json_body={'error': 'Error: ' + str(e)}, status=500)

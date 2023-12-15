@@ -30,7 +30,7 @@ export default function RoutesApp() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/newpassword" element={<NewPassword />} />
-        <Route path="/Pemesanan" element={<Pemesanan />} />
+        <Route path="/Pemesanan/:id" element={<Pemesanan />} />
         <Route path="/KelolaProduk" element={<KelolaProduk />} />
         <Route path="/KelolaAdmin" element={<KelolaAdmin />} />
         {/* <Route path="/UserBeranda" element={<UserBeranda />} /> */}

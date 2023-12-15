@@ -2,12 +2,26 @@ import { Card, Button, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ContenDeluxe() {
   const [tanggal, setTanggal] = useState('');
   const [waktu, setWaktu] = useState('');
   const [durasi, setDurasi] = useState('');
   const [paymentPlan, setPaymentPlan] = useState('');
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`/api/get_products/${id}`)
+      .then((response) => {
+        setProduct(response.data.products);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, [id]);
 
   const handleSubmit = () => {
     // Kirim data ke server atau handle di sini
