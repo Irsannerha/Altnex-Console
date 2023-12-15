@@ -71,6 +71,7 @@ class Pesanan(Base):
     id_pembayaran = Column(String(255), ForeignKey('pembayaran.id_pembayaran'))
     lama_booking = Column(Integer)
     total_harga = Column(Float)
+    tipe = Column(String(255))
 
     produk = relationship("Produk", back_populates="pesanan")
     user = relationship("User", back_populates="pesanan")

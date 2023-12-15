@@ -42,23 +42,26 @@ function ContenDeluxe() {
       id_pembayaran: paymentPlan,
       lama_booking: parseInt(durasi, 10),
       total_harga: totalHarga,
+      tipe: "Deluxe"
     };
-
-    console.log(orderData)
 
     axios
       .post("/api/create_order", orderData)
-      .then(response => {
+      .then((response) => {
         if (response.data.success) {
-          alert('Pesanan berhasil dibuat dengan ID:', response.data.id_pesanan);
+          alert("Pesanan berhasil dibuat");
         } else {
-          alert('Gagal membuat pesanan:', response.data.error);
+          alert("Gagal membuat pesanan");
         }
       })
-      .catch(error => {
-        alert('Error submitting order:', error);
+      .catch((error) => {
+        alert("Error submitting order", error);
       });
   };
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="d-flex justify-content-center align-item-center">
@@ -71,6 +74,13 @@ function ContenDeluxe() {
         }}
       >
         <Card.Body>
+          <img
+            style={{ float: "left"}}
+            src={product.gambar}
+            alt={product.kategoriPS}
+            width="100"
+            height="100"
+          />
           <Card.Title style={{ textAlign: "left" }}>
             PlayStation Plus Deluxe
           </Card.Title>

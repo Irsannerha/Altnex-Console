@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../Context/UserContext";
 
 function ContenExtra() {
+  const { user, isLoggedIn } = useContext(UserContext);
   const [selectedPrice, setSelectedPrice] = useState(0);
-  const handlePriceSelection = (price) => {
+  const [paymentPlan, setPaymentPlan] = useState("");
+  const [tanggal, setTanggal] = useState("");
+  const [tipePaket, setTipePaket] = useState('');
+  const handlePriceSelection = (price, tipe) => {
     setSelectedPrice(price);
+    setTipePaket(tipe);
   };
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -26,16 +32,47 @@ function ContenExtra() {
   let prices = { regular: 10000, ac: 20000, vip: 30000 };
   if (product && product.kategoriPS === "Playstation 5") {
     prices = { regular: 30000, ac: 40000, vip: 50000 };
-  }else if (product && product.kategoriPS === "Playstation 4") {
+  } else if (product && product.kategoriPS === "Playstation 4") {
     prices = { regular: 20000, ac: 30000, vip: 40000 };
-  }else if (product && product.kategoriPS === "Playstation 5"){
+  } else if (product && product.kategoriPS === "Playstation 5") {
     prices = { regular: 10000, ac: 20000, vip: 30000 };
   }
 
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   const handlePayment = () => {
-    // Kode untuk mengirimkan data ke database
-    console.log(`Selected Price: ${selectedPrice}`);
-    // Tambahkan logika atau panggilan API ke database di sini
+    if (!product || !product.harga_sewa) {
+      console.error("Informasi produk tidak lengkap");
+      return;
+    }
+
+    const tanggalWaktu = `${tanggal} 09:00:00`;
+
+    const orderData = {
+      bukti_transfer: "",
+      id_produk: id,
+      id_user: user.id_user,
+      tanggal_booking: tanggalWaktu,
+      id_pembayaran: paymentPlan,
+      lama_booking: 8,
+      total_harga: selectedPrice,
+      tipe: tipePaket
+    };
+
+    axios
+      .post("/api/create_order", orderData)
+      .then((response) => {
+        if (response.data.success) {
+          alert("Pesanan berhasil dibuat");
+        } else {
+          alert("Gagal membuat pesanan");
+        }
+      })
+      .catch((error) => {
+        alert("Error submitting order", error);
+      });
   };
   return (
     <div className="d-flex justify-content-center align-item-center">
@@ -48,6 +85,13 @@ function ContenExtra() {
         }}
       >
         <Card.Body>
+          <img
+            style={{ float: "left" }}
+            src={product.gambar}
+            alt={product.kategoriPS}
+            width="100"
+            height="100"
+          />
           <Card.Title style={{ textAlign: "left" }}>
             PlayStation Plus Extra
           </Card.Title>
@@ -72,7 +116,11 @@ function ContenExtra() {
               }}
             >
               <Form.Label></Form.Label>
-              <Form.Control type="date" />
+              <Form.Control
+                type="date"
+                value={tanggal}
+                onChange={(e) => setTanggal(e.target.value)}
+              />
             </Form.Group>
           </div>
 
@@ -83,7 +131,7 @@ function ContenExtra() {
                   marginBottom: "10px",
                   fontWeight: "bold",
                   fontSize: "16px",
-                  marginTop : "5px",
+                  marginTop: "5px",
                 }}
               >
                 Play night package
@@ -92,10 +140,14 @@ function ContenExtra() {
               <div className="d-flex flex-column align-items-center">
                 <div className="d-flex justify-content-between mb-2">
                   <div className="d-flex flex-column align-items-center">
-                    <p style={{fontSize: "12px", marginBottom: "-1px"}}>Cigarette room</p>
+                    <p style={{ fontSize: "12px", marginBottom: "-1px" }}>
+                      Cigarette room
+                    </p>
                     <Button
-                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
-                      onClick={() => handlePriceSelection(prices.regular)}
+                      className={`hargaButton ${
+                        selectedPrice === prices.regular && "selected"
+                      }`}
+                      onClick={() => handlePriceSelection(prices.regular, 'Cigarette Room')}
                     >
                       {prices.regular}
                     </Button>
@@ -103,21 +155,29 @@ function ContenExtra() {
                   </div>
 
                   <div className="d-flex flex-column align-items-center">
-                    <p style={{fontSize: "12px", marginBottom: "-1px"}}>AC room</p>
+                    <p style={{ fontSize: "12px", marginBottom: "-1px" }}>
+                      AC room
+                    </p>
                     <Button
-                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
-                      onClick={() => handlePriceSelection(prices.regular)}
+                      className={`hargaButton ${
+                        selectedPrice === prices.ac && "selected"
+                      }`}
+                      onClick={() => handlePriceSelection(prices.ac, 'AC Room')}
                     >
                       {prices.ac}
                     </Button>
                     <p className="durasiPaketExtra">09:00 PM s.d 05:30 AM</p>
                   </div>
 
-                  <div  className="d-flex flex-column align-items-center">
-                    <p style={{fontSize: "12px", marginBottom: "-1px"}}>VIP room</p>
+                  <div className="d-flex flex-column align-items-center">
+                    <p style={{ fontSize: "12px", marginBottom: "-1px" }}>
+                      VIP room
+                    </p>
                     <Button
-                      className={`hargaButton ${selectedPrice === prices.regular && "selected"}`}
-                      onClick={() => handlePriceSelection(prices.regular)}
+                      className={`hargaButton ${
+                        selectedPrice === prices.vip && "selected"
+                      }`}
+                      onClick={() => handlePriceSelection(prices.vip, 'VIP')}
                     >
                       {prices.vip}
                     </Button>
@@ -146,7 +206,11 @@ function ContenExtra() {
 
       <Card
         className="contenPemesanan boederRadius"
-        style={{ marginLeft: "20px", backgroundColor: "#DFE3E7", height: "380px"}}
+        style={{
+          marginLeft: "20px",
+          backgroundColor: "#DFE3E7",
+          height: "380px",
+        }}
       >
         <Card.Body>
           <Card
@@ -159,38 +223,57 @@ function ContenExtra() {
           >
             <Card.Body>PACKAGE EXTRA</Card.Body>
           </Card>
-          
-          <div className="d-flex flex-column align-items-center">
 
-          <Card.Title
-            style={{
-              marginTop: "40px",
-              marginBottom: "20px",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Choose a payment plan
-          </Card.Title>
           <div className="d-flex flex-column align-items-center">
-            <Button className="tombolJenisPembayaran">Dana</Button>
-            <Button className="tombolJenisPembayaran">Gopay</Button>
-            <Button className="tombolJenisPembayaran">ATM/Bank Trasnfer</Button>
-          </div>
-          <div className="d-flex justify-content-center align-item-center mt-4">
-            <div style={{ width: "80%", }}>
-              <p
-                style={{
-                  textAlign: "left",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  
-                }}
+            <Card.Title
+              style={{
+                marginTop: "40px",
+                marginBottom: "20px",
+                fontWeight: "bold",
+                fontSize: "16px",
+              }}
+            >
+              Choose a payment plan
+            </Card.Title>
+            <div className="d-flex flex-column align-items-center">
+              <Button
+                className="tombolJenisPembayaran"
+                onClick={() => setPaymentPlan("bayar01")}
               >
-                See Usage Terms for details on price changes and how to cancel.
-              </p>
+                Dana
+              </Button>
+              <Button
+                className="tombolJenisPembayaran"
+                onClick={() => setPaymentPlan("bayar02")}
+              >
+                Gopay
+              </Button>
+              <Button
+                className="tombolJenisPembayaran"
+                onClick={() => setPaymentPlan("bayar03")}
+              >
+                ATM/Bank Trasnfer
+              </Button>
             </div>
-          </div>
+            <div className="d-flex justify-content-center align-item-center mt-4">
+              <div style={{ width: "80%" }}>
+                <p
+                  style={{
+                    textAlign: "left",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  See Usage Terms for details on price changes and how to
+                  cancel.
+                  <div className="d-flex justify-content-end">
+                    <Button className="cekJadwal" onClick={handlePayment}>
+                      Pay
+                    </Button>
+                  </div>
+                </p>
+              </div>
+            </div>
           </div>
         </Card.Body>
       </Card>

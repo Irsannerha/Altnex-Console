@@ -373,11 +373,13 @@ def create_order(request):
             tanggal_booking= data['tanggal_booking'],
             id_pembayaran=data['id_pembayaran'],
             lama_booking=data['lama_booking'],
-            total_harga=data['total_harga']
+            total_harga=data['total_harga'],
+            tipe=data['tipe']
         )
         DBSession.add(new_order)
         DBSession.flush()
         DBSession.commit()
         return {'success': True, 'id_pesanan': new_order.id_pesanan}
+    
     except Exception as e:
         return {'success': False, 'error': str(e)}
