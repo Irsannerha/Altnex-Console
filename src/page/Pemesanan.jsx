@@ -4,10 +4,11 @@ import "../style/style.css";
 import gameOver from "../assets/img/gameOver.png";
 import ContenDeluxe from "../components/ContenDeluxe";
 import ContenExtra from "../components/ContenExtra";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
+
 function Pemesanan() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -38,6 +39,16 @@ function Pemesanan() {
   } else {
     contentComponent = <ContenExtra />;
   }
+  
+  const navigate = useNavigate();
+  const { user, isLoggedIn } = useContext(UserContext);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+    } else if (user.status != "Member"){
+      navigate('/Dashboard');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="mybg">

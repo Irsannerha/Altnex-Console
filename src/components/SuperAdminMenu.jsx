@@ -58,7 +58,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Daboard</Button>
+              <Button className="tombolMenu">Dashboard</Button>
             </div>
             <div>
               <svg

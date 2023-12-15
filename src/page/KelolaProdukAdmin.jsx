@@ -13,9 +13,11 @@ import {
   Alert,
   CardBody,
 } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import iconLogo from "../assets/img/iconlog.png";
 import SuperAdminMenu from "../components/SuperAdminMenu";
+import { useParams, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 function KelolaProduk() {
   const [showAlert, setShowAlert] = useState(false);
@@ -85,6 +87,14 @@ function KelolaProduk() {
       alert("Error deleting product:", error);
     }
   };
+
+  const navigate = useNavigate();
+  const { user, isLoggedIn } = useContext(UserContext);
+  useEffect(() => {
+    if (user.status != "Admin" || !isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -220,7 +230,7 @@ function KelolaProduk() {
                 Produk berhasil dihapus!
               </Alert>
             )}
-            <CardBody>
+            <Card>
               <Table responsive="sm">
                 <thead>
                   <tr>
@@ -315,7 +325,7 @@ function KelolaProduk() {
                   ))}
                 </tbody>
               </Table>
-            </CardBody>
+            </Card>
           </Card>
         </Card.Body>
       </Card>
