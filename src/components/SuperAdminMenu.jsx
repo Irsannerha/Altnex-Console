@@ -28,6 +28,9 @@ function SuperAdminMenu() {
   const handleNavigateToKelolaAdmin = () => {
     navigate('/KelolaAdmin');
   };
+  const handleNavigateToLaporanPenjualan = () => {
+    navigate('/LaporanPenjualan');
+  };
   
   
   return (
@@ -153,7 +156,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Laporan Penjualan</Button>
+              <Button className="tombolMenu"  onClick={handleNavigateToLaporanPenjualan }>Laporan Penjualan</Button>
             </div>
 
             <div
