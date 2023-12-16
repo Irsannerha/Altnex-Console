@@ -42,6 +42,7 @@ def main(global_config, **settings):
         config.add_route('get_ps3', '/api/get_ps3',  request_method='GET')
         config.add_route('get_products_specifics', '/api/get_products/{id_produk}', request_method='GET')
         config.add_route('create_order', '/api/create_order', request_method='POST')
+        config.add_route('get_pesanan', '/api/get_pesanan')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()

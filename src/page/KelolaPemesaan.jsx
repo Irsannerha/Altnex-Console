@@ -22,6 +22,17 @@ import { Dropdown, ButtonGroup } from "react-bootstrap";
 function KelolaPemesanan() {
   const [showModal, setShowModal] = useState(false);
   const [notes, setNotes] = useState("");
+  const [pesanan, setPesanan] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/get_pesanan")
+      .then((response) => {
+        setPesanan(response.data);
+      })
+      .catch((error) => console.error("Error fetching pesanan data:", error));
+  }, []);
+
+  console.log(pesanan);
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
@@ -87,32 +98,43 @@ function KelolaPemesanan() {
                     <th>Nama Produk</th>
                     <th>Tipe Produk</th>
                     <th>Bukti Trasnfer</th>
-                    <th>Detail Pesanan</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>
-                      <ButtonGroup>
-                        <Button variant="success">
-                          <FaCheck />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          style={{ fontWeight: "bold" }}
-                          onClick={() => setShowModal(true)}
-                        >
-                          X
-                        </Button>
-                      </ButtonGroup>
-                    </td>
-                  </tr>
+                  {pesanan.map((pesananItem) => (
+                    <tr key={pesananItem.idPesanan}>
+                      <td>{pesananItem.idPesanan}</td>
+                      <td>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <img
+                            src={pesananItem.gambar}
+                            alt={pesananItem.namaProduk}
+                            width="100"
+                            height="100"
+                            style={{ marginRight: "10px" }}
+                          />
+                          {pesananItem.namaProduk}
+                        </div>
+                      </td>
+                      <td>{pesananItem.tipeProduk}</td>
+                      <td>{pesananItem.buktiTransfer}</td>
+                      <td>
+                        <ButtonGroup>
+                          <Button variant="success">
+                            <FaCheck />
+                          </Button>
+                          <Button
+                            variant="danger"
+                            style={{ fontWeight: "bold" }}
+                            onClick={() => setShowModal(true)}
+                          >
+                            X
+                          </Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card>
