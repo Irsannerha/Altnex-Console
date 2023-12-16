@@ -9,6 +9,7 @@ import {
   Form,
   Row,
   Col,
+  Modal,
 } from "react-bootstrap";
 import React, { useState, useEffect, useContext } from "react";
 import SuperAdminMenu from "../components/SuperAdminMenu";
@@ -19,7 +20,8 @@ import { FaCheck } from "react-icons/fa";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
 
 function KelolaPemesanan() {
- 
+  const [showModal, setShowModal] = useState(false);
+  const [notes, setNotes] = useState("");
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
@@ -101,13 +103,43 @@ function KelolaPemesanan() {
                         <Button variant="success">
                           <FaCheck />
                         </Button>
-                        <Button variant="danger" style={{fontWeight: "bold"}}>X</Button>
+                        <Button
+                          variant="danger"
+                          style={{ fontWeight: "bold" }}
+                          onClick={() => setShowModal(true)}
+                        >
+                          X
+                        </Button>
                       </ButtonGroup>
                     </td>
                   </tr>
                 </tbody>
               </Table>
             </Card>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Enter Notes</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form.Group controlId="notes">
+                  <Form.Label>Notes:</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                  />
+                </Form.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={() => setShowModal(false)}>
+                  Save Notes
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </Card>
         </Card.Body>
       </Card>
