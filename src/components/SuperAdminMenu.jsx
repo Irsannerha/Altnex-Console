@@ -31,6 +31,9 @@ function SuperAdminMenu() {
   const handleNavigateToLaporanPenjualan = () => {
     navigate('/LaporanPenjualan');
   };
+  const handleNavigateToKelolaPemesanan = () => {
+    navigate('/KelolaPemesanan');
+  };
   
   
   return (
@@ -134,7 +137,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Kelola Pesanan</Button>
+              <Button className="tombolMenu" onClick={handleNavigateToKelolaPemesanan}>Kelola Pesanan</Button>
             </div>
 
             <div className="d-flex justify-content-left align-item-left">
