@@ -16,8 +16,7 @@ import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { FaCheck } from "react-icons/fa";
-
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { Dropdown, ButtonGroup, Pagination } from "react-bootstrap";
 
 function KelolaPemesanan() {
   const [showModal, setShowModal] = useState(false);
@@ -32,8 +31,6 @@ function KelolaPemesanan() {
       .catch((error) => console.error("Error fetching pesanan data:", error));
   }, []);
 
-  console.log(pesanan);
-
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
   useEffect(() => {
@@ -41,6 +38,68 @@ function KelolaPemesanan() {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
+
+  const updateStatusPesanan = async (idPesanan, status) => {
+    try {
+      await axios.put(`/api/update_status_pesanan/${idPesanan}`, { status });
+
+      const updatedPesanan = pesanan.map((item) => {
+        if (item.idPesanan === idPesanan) {
+          return { ...item, status };
+        }
+        return item;
+      });
+      setPesanan(updatedPesanan);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const totalPage = Math.ceil(pesanan.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = pesanan.slice(indexOfFirstItem, indexOfLastItem);
+
+  let items = [];
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item
+        key={number}
+        active={number === currentPage}
+        onClick={() => setCurrentPage(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  const renderStatusOrActions = (pesananItem) => {
+    if (pesananItem.status === "Pending") {
+      return (
+        <ButtonGroup>
+          <Button
+            variant="success"
+            onClick={() => updateStatusPesanan(pesananItem.idPesanan, "Setuju")}
+          >
+            <FaCheck />
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() =>
+              updateStatusPesanan(pesananItem.idPesanan, "Ditolak")
+            }
+          >
+            X
+          </Button>
+        </ButtonGroup>
+      );
+    } else {
+      return <span>{pesananItem.status}</span>;
+    }
+  };
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -102,7 +161,7 @@ function KelolaPemesanan() {
                   </tr>
                 </thead>
                 <tbody>
-                  {pesanan.map((pesananItem) => (
+                  {currentItems.map((pesananItem) => (
                     <tr key={pesananItem.idPesanan}>
                       <td>{pesananItem.idPesanan}</td>
                       <td>
@@ -119,20 +178,7 @@ function KelolaPemesanan() {
                       </td>
                       <td>{pesananItem.tipeProduk}</td>
                       <td>{pesananItem.buktiTransfer}</td>
-                      <td>
-                        <ButtonGroup>
-                          <Button variant="success">
-                            <FaCheck />
-                          </Button>
-                          <Button
-                            variant="danger"
-                            style={{ fontWeight: "bold" }}
-                            onClick={() => setShowModal(true)}
-                          >
-                            X
-                          </Button>
-                        </ButtonGroup>
-                      </td>
+                      <td>{renderStatusOrActions(pesananItem)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -164,6 +210,7 @@ function KelolaPemesanan() {
             </Modal>
           </Card>
         </Card.Body>
+        <Pagination>{items}</Pagination>
       </Card>
     </div>
   );

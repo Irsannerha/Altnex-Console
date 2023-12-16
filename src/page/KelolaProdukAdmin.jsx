@@ -18,6 +18,7 @@ import iconLogo from "../assets/img/iconlog.png";
 import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { Dropdown, ButtonGroup, Pagination } from "react-bootstrap";
 
 function KelolaProduk() {
   const [showAlert, setShowAlert] = useState(false);
@@ -95,6 +96,27 @@ function KelolaProduk() {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const totalPage = Math.ceil(products.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  let items = [];
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item
+        key={number}
+        active={number === currentPage}
+        onClick={() => setCurrentPage(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -241,7 +263,7 @@ function KelolaProduk() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
+                  {currentItems.map((product) => (
                     <tr key={product.id_produk}>
                       <td>{product.id_produk}</td>
                       <td>{product.kategoriPS}</td>
@@ -328,6 +350,7 @@ function KelolaProduk() {
             </Card>
           </Card>
         </Card.Body>
+        <Pagination>{items}</Pagination>
       </Card>
     </div>
   );

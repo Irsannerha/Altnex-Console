@@ -422,12 +422,10 @@ def create_order(request):
 @view_config(route_name='get_pesanan', renderer='json')
 def get_pesanan(request):
     try:
-        # Query semua pesanan
         pesanan_list = DBSession.query(Pesanan)\
             .join(Pesanan.produk)\
             .all()
 
-        # Transformasi data untuk respons
         pesanan_data = []
         for pesanan in pesanan_list:
             pesanan_data.append({
@@ -440,10 +438,35 @@ def get_pesanan(request):
                 'tanggalBooking': pesanan.tanggal_booking.isoformat(),
                 'lamaBooking': pesanan.lama_booking,
                 'totalHarga': pesanan.total_harga,
-                'tipe': pesanan.tipe
+                'tipe': pesanan.tipe,
+                'status': pesanan.Status
             })
 
         return pesanan_data
 
     except Exception as e:
         return {'error': str(e)}
+
+
+@view_config(route_name='update_status_pesanan', renderer='json', request_method='PUT')
+def update_status_pesanan(request):
+    try:
+        id_pesanan = request.matchdict['id_pesanan']
+        data = request.json_body
+        status_baru = data.get('status')
+
+        # Query pesanan berdasarkan id_pesanan
+        pesanan = DBSession.query(Pesanan).filter(Pesanan.id_pesanan == id_pesanan).first()
+
+        if not pesanan:
+            return Response(json.dumps({'error': 'Pesanan tidak ditemukan'}), content_type='application/json', status=404)
+
+        # Update status pesanan
+        pesanan.Status = status_baru
+        DBSession.add(pesanan)
+        DBSession.commit()
+
+        return {'success': True}
+
+    except Exception as e:
+        return Response(json.dumps({'error': str(e)}), content_type='application/json', status=500)

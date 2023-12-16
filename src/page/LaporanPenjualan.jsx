@@ -31,6 +31,24 @@ function LaporanPenjualan() {
     "November",
     "Desember",
   ];
+  const getMonthNumber = (monthName) => {
+    const monthNumbers = {
+      Januari: 1,
+      Februari: 2,
+      Maret: 3,
+      April: 4,
+      Mei: 5,
+      Juni: 6,
+      Juli: 7,
+      Agustus: 8,
+      September: 9,
+      Oktober: 10,
+      November: 11,
+      Desember: 12,
+    };
+    return monthNumbers[monthName];
+  };
+
   const [selectedMonth, setSelectedMonth] = useState("Januari");
   const [pesananData, setPesananData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +64,28 @@ function LaporanPenjualan() {
         setIsLoading(false);
       });
   }, []);
+
+  const filteredData = pesananData.filter((item) => {
+    const monthOfBooking = new Date(item.tanggalBooking).getMonth() + 1; // Bulan di JavaScript dimulai dari 0
+    return monthOfBooking === getMonthNumber(selectedMonth);
+  });
+
+  const handleSelectMonth = (month) => {
+    setSelectedMonth(month);
+  };
+
+  const renderTableBody = () => {
+    return filteredData.map((item) => (
+      <tr key={item.idPesanan}>
+        <td>{item.idPesanan}</td>
+        <td>{item.username}</td>
+        <td>{item.tipeProduk}</td>
+        <td>{new Date(item.tanggalBooking).toLocaleDateString()}</td>
+        <td>{new Date(item.tanggalBooking).toLocaleTimeString()}</td>
+        <td>{`Rp ${item.totalHarga}`}</td>
+      </tr>
+    ));
+  };
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
@@ -132,22 +172,7 @@ function LaporanPenjualan() {
                     <th>Total Harga</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {pesananData.map((item) => (
-                    <tr key={item.idPesanan}>
-                      <td>{item.idPesanan}</td>
-                      <td>{item.username}</td>
-                      <td>{item.tipeProduk}</td>
-                      <td>
-                        {new Date(item.tanggalBooking).toLocaleDateString()}
-                      </td>
-                      <td>
-                        {new Date(item.tanggalBooking).toLocaleTimeString()}
-                      </td>
-                      <td>{`Rp ${item.totalHarga}`}</td>
-                    </tr>
-                  ))}
-                </tbody>
+                <tbody>{renderTableBody()}</tbody>
               </Table>
             </Card>
           </Card>

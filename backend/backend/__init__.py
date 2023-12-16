@@ -43,6 +43,7 @@ def main(global_config, **settings):
         config.add_route('get_products_specifics', '/api/get_products/{id_produk}', request_method='GET')
         config.add_route('create_order', '/api/create_order', request_method='POST')
         config.add_route('get_pesanan', '/api/get_pesanan')
+        config.add_route('update_status_pesanan', '/api/update_status_pesanan/{id_pesanan}', request_method='PUT')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()

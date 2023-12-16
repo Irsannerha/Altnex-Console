@@ -17,6 +17,7 @@ import iconLogo from "../assets/img/iconlog.png";
 import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { Pagination } from "react-bootstrap";
 
 function KelolaAdmin() {
   const [showAlert, setShowAlert] = useState(false);
@@ -100,6 +101,27 @@ function KelolaAdmin() {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const totalPage = Math.ceil(admins.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = admins.slice(indexOfFirstItem, indexOfLastItem);
+
+  let items = [];
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item
+        key={number}
+        active={number === currentPage}
+        onClick={() => setCurrentPage(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -260,7 +282,7 @@ function KelolaAdmin() {
                     </tr>
                   </thead>
                   <tbody>
-                    {admins.map((admin) => (
+                    {currentItems.map((admin) => (
                       <tr key={admin.id}>
                         <td>{admin.id}</td>
                         <td>
@@ -345,6 +367,7 @@ function KelolaAdmin() {
             </Card.Body>
           </Card>
         </Card.Body>
+        <Pagination>{items}</Pagination>
       </Card>
     </div>
   );
