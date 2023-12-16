@@ -32,6 +32,20 @@ function LaporanPenjualan() {
     "Desember",
   ];
   const [selectedMonth, setSelectedMonth] = useState("Januari");
+  const [pesananData, setPesananData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("/api/get_pesanan")
+      .then((response) => {
+        setPesananData(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setIsLoading(false);
+      });
+  }, []);
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
@@ -40,6 +54,10 @@ function LaporanPenjualan() {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -115,14 +133,20 @@ function LaporanPenjualan() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                    <td>###</td>
-                  </tr>
+                  {pesananData.map((item) => (
+                    <tr key={item.idPesanan}>
+                      <td>{item.idPesanan}</td>
+                      <td>{item.username}</td>
+                      <td>{item.tipeProduk}</td>
+                      <td>
+                        {new Date(item.tanggalBooking).toLocaleDateString()}
+                      </td>
+                      <td>
+                        {new Date(item.tanggalBooking).toLocaleTimeString()}
+                      </td>
+                      <td>{`Rp ${item.totalHarga}`}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card>

@@ -432,16 +432,15 @@ def get_pesanan(request):
         for pesanan in pesanan_list:
             pesanan_data.append({
                 'idPesanan': pesanan.id_pesanan,
+                'username': pesanan.user.nama,
                 'namaProduk': pesanan.produk.kategoriPS,
                 'tipeProduk': pesanan.produk.kategoriPS,
                 'gambar': pesanan.produk.gambar,
                 'buktiTransfer': pesanan.bukti_transfer,
-                'detailPesanan': {
-                    'tanggalBooking': pesanan.tanggal_booking.isoformat(),
-                    'lamaBooking': pesanan.lama_booking,
-                    'totalHarga': pesanan.total_harga,
-                    'tipe': pesanan.tipe
-                }
+                'tanggalBooking': pesanan.tanggal_booking.isoformat(),
+                'lamaBooking': pesanan.lama_booking,
+                'totalHarga': pesanan.total_harga,
+                'tipe': pesanan.tipe
             })
 
         return pesanan_data
