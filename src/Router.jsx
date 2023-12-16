@@ -12,6 +12,7 @@ import NotFound from "./page/NotFound";
 import Pemesanan from "./page/Pemesanan";
 import KelolaProduk from "./page/KelolaProdukAdmin";
 import KelolaAdmin from "./page/KelolaAdmin";
+import LaporanPenjualan from "./page/LaporanPenjualan";
 // import UserBeranda from "./page/UserBeranda"
 
 
@@ -30,9 +31,10 @@ export default function RoutesApp() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/newpassword" element={<NewPassword />} />
-        <Route path="/Pemesanan/:id" element={<Pemesanan />} />
+        <Route path="/Pemesanan" element={<Pemesanan />} />
         <Route path="/KelolaProduk" element={<KelolaProduk />} />
         <Route path="/KelolaAdmin" element={<KelolaAdmin />} />
+        <Route path="/LaporanPenjualan" element={<LaporanPenjualan />} />
         {/* <Route path="/UserBeranda" element={<UserBeranda />} /> */}
 
         {/* <Route path="/kontak" element={<Kontak />} />
