@@ -446,6 +446,35 @@ def get_pesanan(request):
 
     except Exception as e:
         return {'error': str(e)}
+    
+@view_config(route_name='get_pesanan_specific', renderer='json')
+def get_pesanan_specific(request):
+    try:
+        id_user = request.matchdict['id_user']
+        pesanan_list = DBSession.query(Pesanan).filter(Pesanan.id_user == id_user)\
+            .join(Pesanan.produk)\
+            .all()
+
+        pesanan_data = []
+        for pesanan in pesanan_list:
+            pesanan_data.append({
+                'idPesanan': pesanan.id_pesanan,
+                'username': pesanan.user.nama,
+                'namaProduk': pesanan.produk.kategoriPS,
+                'tipeProduk': pesanan.produk.kategoriPS,
+                'gambar': pesanan.produk.gambar,
+                'buktiTransfer': pesanan.bukti_transfer,
+                'tanggalBooking': pesanan.tanggal_booking.isoformat(),
+                'lamaBooking': pesanan.lama_booking,
+                'totalHarga': pesanan.total_harga,
+                'tipe': pesanan.tipe,
+                'status': pesanan.Status
+            })
+
+        return pesanan_data
+
+    except Exception as e:
+        return {'error': str(e)}
 
 
 @view_config(route_name='update_status_pesanan', renderer='json', request_method='PUT')

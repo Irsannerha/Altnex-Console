@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
+import Button from "react-bootstrap/Button";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 
@@ -48,6 +49,11 @@ function Navbars() {
     setUser(null);
     setIsLoggedIn(false);
   };
+
+  const handleHistory = (id_user) => {
+    navigate(`/HistoryPemesanan/${id_user}`);
+  };
+
   
 
   return (
@@ -92,6 +98,7 @@ function Navbars() {
 
                     <Dropdown.Menu>
                       <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                      <Dropdown.Item href="/HistoryPemesanan/${id_user}">History</Dropdown.Item>
                       <Dropdown.Item onClick={handleLogout}>
                         Logout
                       </Dropdown.Item>
