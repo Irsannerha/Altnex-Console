@@ -98,7 +98,7 @@ function Navbars() {
 
                     <Dropdown.Menu>
                       <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-                      <Dropdown.Item href="/HistoryPemesanan/${id_user}">History</Dropdown.Item>
+                      <Dropdown.Item href={`/HistoryPemesanan/${user.id_user}`}>History</Dropdown.Item>
                       <Dropdown.Item onClick={handleLogout}>
                         Logout
                       </Dropdown.Item>

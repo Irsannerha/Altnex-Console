@@ -48,6 +48,19 @@ function HistoryPemesanan() {
     return <div>Loading...</div>;
   }
 
+  const getVariantByStatus = (status) => {
+    switch (status) {
+      case "Pending":
+        return "secondary";
+      case "Ditolak":
+        return "danger";
+      case "Setuju":
+        return "success";
+      default:
+        return "primary"; // atau beberapa variant default lainnya
+    }
+  };
+
   return (
     <div className="mybg">
       <Navbars />
@@ -82,7 +95,9 @@ function HistoryPemesanan() {
                       >
                         Waktu Penyewaan
                       </div>
-                      <div>{new Date(order.tanggalBooking).toLocaleTimeString()}</div>
+                      <div>
+                        {new Date(order.tanggalBooking).toLocaleTimeString()}
+                      </div>
                       <div
                         style={{
                           color: "#6B6B6B",
@@ -105,10 +120,7 @@ function HistoryPemesanan() {
                   </div>
                 </div>
                 <div>
-                  <Button
-                    disabled
-                    variant={order.status === "Pending" ? "danger" : "success"}
-                  >
+                  <Button disabled variant={getVariantByStatus(order.status)}>
                     {order.status}
                   </Button>
                 </div>
