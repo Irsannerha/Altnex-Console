@@ -104,10 +104,10 @@ function KelolaPemesanan() {
   const [showBuktiModal, setShowBuktiModal] = useState(false);
   const [buktiImageUrl, setBuktiImageUrl] = useState("");
 
-  // Fungsi untuk menampilkan modal dengan gambar bukti transfer
+  
   const handleShowBukti = (imageUrl) => {
-    setBuktiImageUrl(imageUrl); // Set URL gambar yang akan ditampilkan
-    setShowBuktiModal(true); // Buka modal
+    setBuktiImageUrl(imageUrl);
+    setShowBuktiModal(true);
   };
 
   return (

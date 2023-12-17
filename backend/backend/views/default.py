@@ -174,10 +174,10 @@ def register(request):
 
 
 def validate_user(email, password):
-    user = get_user_by_email(email)
+    user = DBSession.query(User).filter_by(email=email).first()
     if user and check_password(password, user.hashed_password):
-        return True
-    return False
+        return user
+    return None  # or you could raise an exception or return a specific response
 
 
 def get_user_by_email(email):
@@ -200,8 +200,9 @@ def login(request):
         if not email or not password:
             return Response('Missing email or password', status=400)
 
-        if not validate_user(email, password):
-            return HTTPBadRequest(json_body={'message': 'Invalid username or password'})
+        user = validate_user(email, password)
+        if not user:
+            return {'message': 'Invalid username or password'}, 400
 
         # Buat token
         expiration = datetime.utcnow() + timedelta(hours=1)
