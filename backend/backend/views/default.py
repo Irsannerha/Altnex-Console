@@ -10,7 +10,10 @@ from sqlalchemy.exc import DBAPIError
 import json
 from ..models.mymodel import DBSession, User, Produk, Pesanan, Pembayaran
 import bcrypt
-
+from sqlalchemy.orm import joinedload
+import os
+import shutil
+import transaction
 
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
 def my_view(request):
@@ -446,7 +449,8 @@ def get_pesanan(request):
 
     except Exception as e:
         return {'error': str(e)}
-    
+
+
 @view_config(route_name='get_pesanan_specific', renderer='json')
 def get_pesanan_specific(request):
     try:
@@ -485,7 +489,8 @@ def update_status_pesanan(request):
         status_baru = data.get('status')
 
         # Query pesanan berdasarkan id_pesanan
-        pesanan = DBSession.query(Pesanan).filter(Pesanan.id_pesanan == id_pesanan).first()
+        pesanan = DBSession.query(Pesanan).filter(
+            Pesanan.id_pesanan == id_pesanan).first()
 
         if not pesanan:
             return Response(json.dumps({'error': 'Pesanan tidak ditemukan'}), content_type='application/json', status=404)
@@ -499,3 +504,61 @@ def update_status_pesanan(request):
 
     except Exception as e:
         return Response(json.dumps({'error': str(e)}), content_type='application/json', status=500)
+
+
+@view_config(route_name='detail_pesanan', renderer='json')
+def detail_pesanan(request):
+    try:
+        id_pesanan = request.matchdict['id_pesanan']
+        pesanan = DBSession.query(Pesanan)\
+            .options(joinedload(Pesanan.user), joinedload(Pesanan.produk), joinedload(Pesanan.pembayaran))\
+            .filter(Pesanan.id_pesanan == id_pesanan)\
+            .first()
+
+        if pesanan:
+            pesanan_data = {
+                'idPesanan': pesanan.id_pesanan,
+                'username': pesanan.user.nama,
+                'namaProduk': pesanan.produk.kategoriPS,
+                'tipeProduk': pesanan.produk.kategoriPS,
+                'gambar': pesanan.produk.gambar,
+                'namaPembayaran': pesanan.pembayaran.nama_pembayaran,
+                'noPembayaran': pesanan.pembayaran.no_pembayaran,
+                'buktiTransfer': pesanan.bukti_transfer,
+                'tanggalBooking': pesanan.tanggal_booking.isoformat(),
+                'lamaBooking': pesanan.lama_booking,
+                'totalHarga': pesanan.total_harga,
+                'tipe': pesanan.tipe,
+                'status': pesanan.Status,
+                
+            }
+            return pesanan_data
+        else:
+            return {'error': 'Pesanan not found'}
+
+    except ValueError:
+        return {'error': 'Invalid id_pesanan format'}
+    except Exception as e:
+        return {'error': str(e)}
+
+@view_config(route_name='upload_bukti_pembayaran', renderer='json')
+def upload_bukti_pembayaran(request):
+    try:
+        id_pesanan = request.matchdict['id_pesanan']
+        pesanan = DBSession.query(Pesanan).filter(Pesanan.id_pesanan == id_pesanan).first()
+
+        input_file = request.POST['gambar'].file
+        save_path = os.path.join('../src/assets/img/', 'bukti_pembayaran', f'{id_pesanan}.png')
+
+        with open(save_path, 'wb') as output_file:
+            shutil.copyfileobj(input_file, output_file)
+
+        pesanan.bukti_transfer = f'../src/assets/img/bukti_pembayaran/{id_pesanan}.png'
+        DBSession.add(pesanan)
+        DBSession.flush()
+        DBSession.commit()
+        
+        return {'success': True}
+
+    except Exception as e:
+        return {'error': str(e)}

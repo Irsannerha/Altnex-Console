@@ -3,13 +3,6 @@ import axios from "axios";
 import {
   Card,
   Button,
-  Table,
-  Navbar,
-  Container,
-  Form,
-  Row,
-  Col,
-  Modal,
   ListGroup,
 } from "react-bootstrap";
 import React, { useState, useEffect, useContext } from "react";
@@ -48,6 +41,10 @@ function HistoryPemesanan() {
     return <div>Loading...</div>;
   }
 
+  const handleCardClick = (idPesanan) => {
+    navigate(`/detailPesanan/${idPesanan}`);
+  };
+
   const getVariantByStatus = (status) => {
     switch (status) {
       case "Pending":
@@ -69,6 +66,7 @@ function HistoryPemesanan() {
           key={order.idPesanan}
           className="mt-5 mx-auto"
           style={{ width: "110rem" }}
+          onClick={() => handleCardClick(order.idPesanan)}
         >
           <Card.Header as="h5">
             {new Date(order.tanggalBooking).toLocaleDateString()}

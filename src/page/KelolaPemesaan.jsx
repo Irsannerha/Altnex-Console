@@ -101,6 +101,15 @@ function KelolaPemesanan() {
     }
   };
 
+  const [showBuktiModal, setShowBuktiModal] = useState(false);
+  const [buktiImageUrl, setBuktiImageUrl] = useState("");
+
+  // Fungsi untuk menampilkan modal dengan gambar bukti transfer
+  const handleShowBukti = (imageUrl) => {
+    setBuktiImageUrl(imageUrl); // Set URL gambar yang akan ditampilkan
+    setShowBuktiModal(true); // Buka modal
+  };
+
   return (
     <div className="d-flex justify-content-center align-item-center layar">
       <SuperAdminMenu />
@@ -177,7 +186,20 @@ function KelolaPemesanan() {
                         </div>
                       </td>
                       <td>{pesananItem.tipeProduk}</td>
-                      <td>{pesananItem.buktiTransfer}</td>
+                      <td>
+                        {pesananItem.buktiTransfer ? (
+                          <Button
+                            variant="outline-primary"
+                            onClick={() =>
+                              handleShowBukti(pesananItem.buktiTransfer)
+                            }
+                          >
+                            Lihat Bukti
+                          </Button>
+                        ) : (
+                          "Tidak Ada"
+                        )}
+                      </td>
                       <td>{renderStatusOrActions(pesananItem)}</td>
                     </tr>
                   ))}
@@ -212,6 +234,23 @@ function KelolaPemesanan() {
         </Card.Body>
         <Pagination>{items}</Pagination>
       </Card>
+      <Modal
+        show={showBuktiModal}
+        onHide={() => setShowBuktiModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Bukti Transfer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img src={buktiImageUrl} alt="Bukti Transfer" className="img-fluid" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowBuktiModal(false)}>
+            Tutup
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

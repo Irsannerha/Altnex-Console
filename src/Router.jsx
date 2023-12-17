@@ -15,6 +15,7 @@ import KelolaAdmin from "./page/KelolaAdmin";
 import LaporanPenjualan from "./page/LaporanPenjualan";
 import KelolaPemesanan from "./page/KelolaPemesaan";
 import HistoryPemesanan from "./page/History";
+import DetailPesanan from "./page/DetailPesanan"
 // import UserBeranda from "./page/UserBeranda"
 
 
@@ -39,6 +40,7 @@ export default function RoutesApp() {
         <Route path="/LaporanPenjualan" element={<LaporanPenjualan />} />
         <Route path="/KelolaPemesanan" element={<KelolaPemesanan />} />
         <Route path="/HistoryPemesanan/:id" element={<HistoryPemesanan />} />
+        <Route path="/DetailPesanan/:id" element={<DetailPesanan />} />
         {/* <Route path="/UserBeranda" element={<UserBeranda />} /> */}
 
         {/* <Route path="/kontak" element={<Kontak />} />

@@ -8,8 +8,10 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbars() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const { user, isLoggedIn } = useContext(UserContext);
   const { setUser, setIsLoggedIn } = useContext(UserContext);
@@ -48,10 +50,7 @@ function Navbars() {
     localStorage.removeItem('isLoggedIn');
     setUser(null);
     setIsLoggedIn(false);
-  };
-
-  const handleHistory = (id_user) => {
-    navigate(`/HistoryPemesanan/${id_user}`);
+    navigate("/login");
   };
 
   
