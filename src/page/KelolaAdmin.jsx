@@ -59,9 +59,6 @@ function KelolaAdmin() {
         },
       });
 
-      const response = await axios.get("/api/get_admin");
-      setAdmins(response.data.admins);
-
       setShowAlert(true);
 
       setAdmin({
@@ -122,6 +119,45 @@ function KelolaAdmin() {
       </Pagination.Item>
     );
   }
+
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const handleShowModalEdit = () => setShowModalEdit(true);
+  const handleCloseModalEdit = () => setShowModalEdit(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+
+  const handleEdit = (adminData) => {
+    setSelectedAdmin(adminData);
+    handleShowModalEdit();
+  };
+
+  const handleUpdate = async () => {
+    const formData = new FormData();
+    formData.append("nama", admin.nama);
+    formData.append("email", admin.email);
+    formData.append("password", admin.password);
+    formData.append("foto", admin.foto);
+
+    try {
+      await axios.post(`/api/update_admin?id_user=${selectedAdmin}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setShowAlert(true);
+
+      setAdmin({
+        nama: "",
+        email: "",
+        password: "",
+        foto: "",
+      });
+
+      handleCloseModalEdit();
+    } catch (error) {
+      console.error("Error Updating admin:", error);
+    }
+  };
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
@@ -248,6 +284,71 @@ function KelolaAdmin() {
                         </Button>
                       </Modal.Footer>
                     </Modal>
+
+                    <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Edit Admin</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Form>
+                            <Form.Group controlId="formNama">
+                              <Form.Label>Nama</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="nama"
+                                value={admin.nama}
+                                onChange={handleInputChange}
+                                placeholder="Masukkan Nama"
+                              />
+                            </Form.Group>
+                            <Form.Group controlId="formEmail">
+                              <Form.Label>Email</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="email"
+                                value={admin.email}
+                                onChange={handleInputChange}
+                                placeholder="Masukkan Email"
+                              />
+                            </Form.Group>
+                            <Form.Group controlId="formPassword">
+                              <Form.Label>Password</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="password"
+                                value={admin.password}
+                                onChange={handleInputChange}
+                                placeholder="Masukan Password"
+                              />
+                            </Form.Group>
+                            <Form.Group controlId="formFotoProfil">
+                              <Form.Label>Foto Profil</Form.Label>
+                              <Form.Control
+                                type="file"
+                                name="foto"
+                                onChange={handleInputChange}
+                              />
+                            </Form.Group>
+                          </Form>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          variant="secondary"
+                          onClick={handleCloseModalEdit}
+                        >
+                          Tutup
+                        </Button>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          onClick={() => handleUpdate()}
+                        >
+                          Update
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
                   </Navbar.Collapse>
                 </Container>
               </Navbar>
@@ -283,8 +384,8 @@ function KelolaAdmin() {
                   </thead>
                   <tbody>
                     {currentItems.map((admin) => (
-                      <tr key={admin.id}>
-                        <td>{admin.id}</td>
+                      <tr key={admin.id_user}>
+                        <td>{admin.id_user}</td>
                         <td>
                           <img src={admin.foto} width="100" height="100" />
                         </td>
@@ -292,7 +393,11 @@ function KelolaAdmin() {
                         <td>{admin.email}</td>
                         <td>{admin.password}</td>
                         <td>
-                          <button id="edit" className="buttonAction">
+                          <button
+                            id="edit"
+                            className="buttonAction"
+                            onClick={() => handleEdit(admin.id_user)}
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="25"

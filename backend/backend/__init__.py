@@ -47,6 +47,8 @@ def main(global_config, **settings):
         config.add_route('detail_pesanan', '/api/detail_pesanan/{id_pesanan}', request_method='GET')
         config.add_route('update_status_pesanan', '/api/update_status_pesanan/{id_pesanan}', request_method='PUT')
         config.add_route('upload_bukti_pembayaran', '/api/upload_bukti_pembayaran/{id_pesanan}', request_method='POST')
+        config.add_route('update_admin', '/api/update_admin', request_method='POST')
+        config.add_route('update_produk', '/api/update_produk', request_method='POST')
         config.include('.routes')
         config.scan()
     return config.make_wsgi_app()

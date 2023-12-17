@@ -118,6 +118,44 @@ function KelolaProduk() {
     );
   }
 
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const handleShowModalEdit = () => setShowModalEdit(true);
+  const handleCloseModalEdit = () => setShowModalEdit(false);
+  const [selectedProduk, setSelectedProduk] = useState(null);
+
+  const handleEdit = (produkData) => {
+    setSelectedProduk(produkData);
+    console.log(produkData)
+    handleShowModalEdit();
+  };
+
+  const handleUpdate = async () => {
+    const formData = new FormData();
+    formData.append("id_produk", product.id_produk);
+    formData.append("kategoriPS", product.kategoriPS);
+    formData.append("gambar", product.gambar);
+
+    try {
+      await axios.post(`/api/update_produk?id_produk=${selectedProduk}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setShowAlert(true);
+
+      setProduct({
+        id_produk: "",
+        kategoriPS: "",
+        gambar: "",
+      });
+
+      handleCloseModalEdit();
+    } catch (error) {
+      console.error("Error Updating admin:", error);
+    }
+  };
+
   return (
     <div className="d-flex justify-content-center align-item-center layar">
       <SuperAdminMenu />
@@ -252,6 +290,55 @@ function KelolaProduk() {
                 Produk berhasil dihapus!
               </Alert>
             )}
+            <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Produk</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group controlId="formNamaProduk">
+                    <Form.Label>Id Produk</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="id_produk"
+                      value={product.id_produk}
+                      onChange={handleInputChange}
+                      placeholder="Masukkan nama produk"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formTipeProduk">
+                    <Form.Label>Tipe Produk</Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="kategoriPS"
+                      value={product.kategoriPS}
+                      onChange={handleInputChange}
+                    >
+                      <option value="/">Pilih Tipe</option>
+                      <option value="Playstation 3">Playstation 3</option>
+                      <option value="Playstation 4">Playstation 4</option>
+                      <option value="Playstation 5">Playstation 5</option>
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="formGambarProduk">
+                    <Form.Label>Gambar Produk</Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="gambar"
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseModalEdit}>
+                  Tutup
+                </Button>
+                <Button variant="primary" onClick={handleUpdate}>
+                  Simpan
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <Card>
               <Table responsive="sm">
                 <thead>
@@ -276,7 +363,7 @@ function KelolaProduk() {
                         />
                       </td>
                       <td>
-                        <button className="buttonAction">
+                        <button id="edit" className="buttonAction" onClick={() => handleEdit(product.id_produk)}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="25"

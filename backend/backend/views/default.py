@@ -15,6 +15,7 @@ import os
 import shutil
 import transaction
 
+
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
 def my_view(request):
     return {'project': 'backend'}
@@ -531,7 +532,7 @@ def detail_pesanan(request):
                 'totalHarga': pesanan.total_harga,
                 'tipe': pesanan.tipe,
                 'status': pesanan.Status,
-                
+
             }
             return pesanan_data
         else:
@@ -542,14 +543,17 @@ def detail_pesanan(request):
     except Exception as e:
         return {'error': str(e)}
 
+
 @view_config(route_name='upload_bukti_pembayaran', renderer='json')
 def upload_bukti_pembayaran(request):
     try:
         id_pesanan = request.matchdict['id_pesanan']
-        pesanan = DBSession.query(Pesanan).filter(Pesanan.id_pesanan == id_pesanan).first()
+        pesanan = DBSession.query(Pesanan).filter(
+            Pesanan.id_pesanan == id_pesanan).first()
 
         input_file = request.POST['gambar'].file
-        save_path = os.path.join('../src/assets/img/', 'bukti_pembayaran', f'{id_pesanan}.png')
+        save_path = os.path.join('../src/assets/img/',
+                                 'bukti_pembayaran', f'{id_pesanan}.png')
 
         with open(save_path, 'wb') as output_file:
             shutil.copyfileobj(input_file, output_file)
@@ -558,8 +562,77 @@ def upload_bukti_pembayaran(request):
         DBSession.add(pesanan)
         DBSession.flush()
         DBSession.commit()
-        
+
         return {'success': True}
 
+    except Exception as e:
+        return {'error': str(e)}
+
+
+@view_config(route_name='update_admin', renderer='json', request_method='POST')
+def update_admin(request):
+    try:
+        id_user = request.params.get('id_user')
+        admin = DBSession.query(User).filter(
+            User.id_user == id_user, User.status == 'Admin').first()
+        if not admin:
+            return {'error': 'Admin not found'}
+
+        data = request.json_body
+        admin.nama = data.get('nama', admin.nama)
+        admin.email = data.get('email', admin.email)
+
+        new_password = data.get('password')
+        if new_password:
+            hashed_password = bcrypt.hashpw(
+                new_password.encode('utf-8'), bcrypt.gensalt())
+            admin.hashed_password = hashed_password
+
+        if 'foto' in request.POST:
+            input_file = request.POST['foto'].file
+            save_path = f'../src/assets/img/profile_picture/{admin.nama}.png'
+            with open(save_path, 'wb') as f:
+                f.write(input_file.read())
+            admin.gambar = save_path
+
+        DBSession.add(admin)
+        DBSession.flush()
+        DBSession.commit()
+        return {'success': True, 'message': 'Admin updated successfully'}
+    except Exception as e:
+        return {'error': str(e)}
+
+
+@view_config(route_name='update_produk', renderer='json', request_method='POST')
+def update_produk(request):
+    try:
+        id_produk = request.params.get('id_produk')
+        produk = DBSession.query(Produk).filter(Produk.id_produk == id_produk).first()
+        if not produk:
+            return {'error': 'Produk not found'}
+
+        produk.id_produk = request.POST.get('id_produk', produk.id_produk)
+        produk.kategoriPS = request.POST.get('kategoriPS', produk.kategoriPS)
+
+        if 'gambar' in request.POST:
+            input_file = request.POST['gambar'].file
+            save_path = f'../src/assets/img/produk/{produk.id_produk}.png'
+            with open(save_path, 'wb') as f:
+                f.write(input_file.read())
+            produk.gambar = save_path
+
+        if produk.kategoriPS == "Playstation 3":
+            harga_sewa = 5000
+        elif produk.kategoriPS == "Playstation 4":
+            harga_sewa = 10000
+        elif produk.kategoriPS == "Playstation 5":
+            harga_sewa = 15000
+
+        produk.harga_sewa = harga_sewa
+
+        DBSession.add(produk)
+        DBSession.flush()
+        DBSession.commit()
+        return {'success': True, 'message': 'Produk updated successfully'}
     except Exception as e:
         return {'error': str(e)}
