@@ -138,7 +138,7 @@ function KelolaAdmin() {
     formData.append("foto", admin.foto);
 
     try {
-      await axios.post(`/api/update_admin?id_user=${selectedAdmin}`, formData, {
+      await axios.post(`/api/update_user?id_user=${selectedAdmin}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

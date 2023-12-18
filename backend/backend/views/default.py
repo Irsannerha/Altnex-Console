@@ -568,33 +568,34 @@ def upload_bukti_pembayaran(request):
 
 
 
-@view_config(route_name='update_admin', renderer='json', request_method='POST')
-def update_admin(request):
+@view_config(route_name='update_user', renderer='json', request_method='POST')
+def update_user(request):
     try:
         id_user = request.params.get('id_user')
-        admin = DBSession.query(User).filter(
-            User.id_user == id_user, User.status == 'Admin').first()
-        if not admin:
-            return {'error': 'Admin not found'}
+        user = DBSession.query(User).filter(
+            User.id_user == id_user).first()
+        
+        if not user:
+            return {'error': 'User not found'}
 
         data = request.json_body
-        admin.nama = data.get('nama', admin.nama)
-        admin.email = data.get('email', admin.email)
+        user.nama = data.get('nama', user.nama)
+        user.email = data.get('email', user.email)
 
         new_password = data.get('password')
         if new_password:
             hashed_password = bcrypt.hashpw(
                 new_password.encode('utf-8'), bcrypt.gensalt())
-            admin.hashed_password = hashed_password
+            user.hashed_password = hashed_password
 
         if 'foto' in request.POST:
             input_file = request.POST['foto'].file
-            save_path = f'../src/assets/img/profile_picture/{admin.nama}.png'
+            save_path = f'../src/assets/img/profile_picture/{user.nama}.png'
             with open(save_path, 'wb') as f:
                 f.write(input_file.read())
-            admin.gambar = save_path
+            user.gambar = save_path
 
-        DBSession.add(admin)
+        DBSession.add(user)
         DBSession.flush()
         DBSession.commit()
         return {'success': True, 'message': 'Admin updated successfully'}
@@ -644,7 +645,7 @@ def total_members(request):
 
 @view_config(route_name='total_admins', renderer='json')
 def total_admins(request):
-    total_admins = DBSession.query(User).filter(User.status == 'Admins').count()
+    total_admins = DBSession.query(User).filter(User.status == 'Admin').count()
     return {'total_admins': total_admins}
 
 @view_config(route_name='total_products', renderer='json')

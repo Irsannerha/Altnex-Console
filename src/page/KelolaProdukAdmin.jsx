@@ -57,8 +57,6 @@ function KelolaProduk() {
         },
       });
 
-      const response = await axios.get("/api/get_products");
-      setProducts(response.data.products);
       setShowAlert(true);
       setProduct({
         id_produk: "",
