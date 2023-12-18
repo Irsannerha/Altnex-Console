@@ -82,7 +82,7 @@ function DashboardSuperAdmin() {
                 <Container>
                   <Navbar.Toggle />
                   <Navbar.Collapse className="justify-content-end">
-                    <h3>super admin</h3>
+                    <h3>admin</h3>
                   </Navbar.Collapse>
                 </Container>
               </Navbar>
