@@ -23,38 +23,53 @@ function DashboardSuperAdmin() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalAdmins, setTotalAdmins] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [chartData, setChartData] = useState([]);
 
-  // Fungsi untuk mendapatkan data jumlah akun, admin, dan produk
   const fetchData = () => {
-    // Simulasikan pengambilan data dari API atau localStorage
-    const totalUsersFromAPI = 100; // Ganti dengan data aktual
-    const totalAdminsFromAPI = 20; // Ganti dengan data aktual
-    const totalProductsFromAPI = 50; // Ganti dengan data aktual
+    fetch('/api/total_members')
+    .then(response => response.json())
+    .then(data => {
+      setTotalUsers(data.total_members);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
 
-    setTotalUsers(totalUsersFromAPI);
-    setTotalAdmins(totalAdminsFromAPI);
-    setTotalProducts(totalProductsFromAPI);
+    fetch('/api/total_admins')
+    .then(response => response.json())
+    .then(data => {
+      setTotalAdmins(data.total_admins);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
+
+    fetch('/api/total_products')
+    .then(response => response.json())
+    .then(data => {
+      setTotalProducts(data.total_products);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
+
+    fetch(`/api/total_harga_per_bulan?tahun=2023`)
+    .then(response => response.json())
+    .then(data => {
+      const newChartData = Object.entries(data).map(([bulan, total]) => ({
+        Year: bulan,
+        value: total,
+      }));
+      setChartData(newChartData);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  const chartData = [
-    { Year: "Januari", value: 500000 },
-    { Year: "Februari", value: 400000 },
-    { Year: "Maret", value: 600000 },
-    { Year: "April", value: 500000 },
-    { Year: "Mei", value: 1500000 },
-    { Year: "Juni", value: 1500000 },
-    { Year: "Juli", value: 1000000 },
-    { Year: "Agustus", value: 900000 },
-    { Year: "September", value: 1200000 },
-    { Year: "Oktober", value: 2000000 },
-    { Year: "November", value: 3050000 },
-    { Year: "Desember", value: 500000 },
-    // ... tambahkan data lainnya
-  ];
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">

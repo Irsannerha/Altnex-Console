@@ -5,16 +5,13 @@ from pyramid.httpexceptions import HTTPBadRequest
 import jwt
 from datetime import datetime, timedelta
 from pyramid.httpexceptions import HTTPNotFound
-import pymysql
 from sqlalchemy.exc import DBAPIError
 import json
 from ..models.mymodel import DBSession, User, Produk, Pesanan, Pembayaran
 import bcrypt
 from sqlalchemy.orm import joinedload
-import os
-import shutil
-import transaction
-
+import calendar
+from sqlalchemy import extract
 
 @view_config(route_name='home', renderer='backend:templates/mytemplate.jinja2')
 def my_view(request):
@@ -548,17 +545,18 @@ def detail_pesanan(request):
 def upload_bukti_pembayaran(request):
     try:
         id_pesanan = request.matchdict['id_pesanan']
-        pesanan = DBSession.query(Pesanan).filter(
-            Pesanan.id_pesanan == id_pesanan).first()
+        pesanan = DBSession.query(Pesanan).filter(Pesanan.id_pesanan == id_pesanan).first()
 
-        input_file = request.POST['gambar'].file
-        save_path = os.path.join('../src/assets/img/',
-                                 'bukti_pembayaran', f'{id_pesanan}.png')
+        if not pesanan:
+            return {'success': False, 'error': 'Pesanan tidak ditemukan'}
 
-        with open(save_path, 'wb') as output_file:
-            shutil.copyfileobj(input_file, output_file)
+        if 'gambar' in request.POST:
+            input_file = request.POST['gambar'].file
+            save_path = f'../src/assets/img/bukti_pembayaran/{id_pesanan}.png'
+            with open(save_path, 'wb') as f:
+                f.write(input_file.read())
+            pesanan.bukti_transfer = save_path
 
-        pesanan.bukti_transfer = f'../src/assets/img/bukti_pembayaran/{id_pesanan}.png'
         DBSession.add(pesanan)
         DBSession.flush()
         DBSession.commit()
@@ -566,7 +564,8 @@ def upload_bukti_pembayaran(request):
         return {'success': True}
 
     except Exception as e:
-        return {'error': str(e)}
+        return {'success': False, 'error': str(e)}
+
 
 
 @view_config(route_name='update_admin', renderer='json', request_method='POST')
@@ -636,3 +635,32 @@ def update_produk(request):
         return {'success': True, 'message': 'Produk updated successfully'}
     except Exception as e:
         return {'error': str(e)}
+    
+
+@view_config(route_name='total_members', renderer='json')
+def total_members(request):
+    total_members = DBSession.query(User).filter(User.status == 'Member').count()
+    return {'total_members': total_members}
+
+@view_config(route_name='total_admins', renderer='json')
+def total_admins(request):
+    total_admins = DBSession.query(User).filter(User.status == 'Admins').count()
+    return {'total_admins': total_admins}
+
+@view_config(route_name='total_products', renderer='json')
+def total_products(request):
+    total_products = DBSession.query(Produk).count()
+    return {'total_products': total_products}
+
+@view_config(route_name='total_harga_per_bulan', renderer='json')
+def total_harga_per_bulan(request):
+    tahun = request.params.get('tahun', 2023)
+    total_per_bulan = {month: 0 for month in calendar.month_name[1:]}
+
+    pesanan = DBSession.query(Pesanan).filter(extract('year', Pesanan.tanggal_booking) == tahun)
+
+    for p in pesanan:
+        bulan = p.tanggal_booking.strftime('%B')
+        total_per_bulan[bulan] += p.total_harga
+
+    return total_per_bulan

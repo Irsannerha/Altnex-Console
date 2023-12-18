@@ -34,6 +34,9 @@ function SuperAdminMenu() {
   const handleNavigateToKelolaPemesanan = () => {
     navigate('/KelolaPemesanan');
   };
+  const handleNavigateToDashboard = () => {
+    navigate('/DashboardSuperAdmin');
+  };
   
   
   return (
@@ -64,7 +67,7 @@ function SuperAdminMenu() {
                   fill="black"
                 />
               </svg>
-              <Button className="tombolMenu">Dashboard</Button>
+              <Button className="tombolMenu" onClick={handleNavigateToDashboard}>Dashboard</Button>
             </div>
             <div>
               <svg

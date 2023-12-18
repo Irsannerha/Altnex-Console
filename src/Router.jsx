@@ -17,13 +17,6 @@ import LaporanPenjualan from "./page/LaporanPenjualan";
 import KelolaPemesanan from "./page/KelolaPemesaan";
 import HistoryPemesanan from "./page/History";
 import DetailPesanan from "./page/DetailPesanan";
-// import UserBeranda from "./page/UserBeranda"
-
-// import Checkout from "./page/Checkout";
-// import Dashboard from "./page/Dashboard";
-// import UserLogin from "./components/UserLogin";
-// import UserRegis from "./components/UserRegis";
-// import Produk from "./components/Produk";
 
 export default function RoutesApp() {
   return (
@@ -42,16 +35,6 @@ export default function RoutesApp() {
         <Route path="/KelolaPemesanan" element={<KelolaPemesanan />} />
         <Route path="/HistoryPemesanan/:id" element={<HistoryPemesanan />} />
         <Route path="/DetailPesanan/:id" element={<DetailPesanan />} />
-        {/* <Route path="/UserBeranda" element={<UserBeranda />} /> */}
-
-        {/* <Route path="/kontak" element={<Kontak />} />
-        <Route path="/tentang" element={<Tentang />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/userlogin" element={<UserLogin />} />
-        <Route path="/userregis" element={<UserRegis />} />
-        <Route path="/produk" element={<Produk />} /> */}
       </Routes>
     </BrowserRouter>
   );

@@ -5,6 +5,7 @@ import gambar1 from "../assets/img/image 29.png";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
+import { Navigate } from "react-router-dom";
 
 function ContenDeluxe() {
   const { user, isLoggedIn } = useContext(UserContext);
@@ -14,6 +15,7 @@ function ContenDeluxe() {
   const [paymentPlan, setPaymentPlan] = useState("");
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate()
   useEffect(() => {
     axios
       .get(`/api/get_products/${id}`)
@@ -50,6 +52,7 @@ function ContenDeluxe() {
       .then((response) => {
         if (response.data.success) {
           alert("Pesanan berhasil dibuat");
+          navigate(`/detailPesanan/${response.data.id_pesanan}`);
         } else {
           alert("Gagal membuat pesanan");
         }
