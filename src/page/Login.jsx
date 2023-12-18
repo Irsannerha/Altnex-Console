@@ -22,7 +22,7 @@ function Login() {
   };
   const getUserDataFromServer = async (email) => {
     try {
-        const response = await fetch(`/api/get_user?email=${email}`, { // Sesuaikan dengan parameter yang dibutuhkan
+        const response = await fetch(`/api/get_user?email=${email}`, {
             method: 'GET',
             headers: {
                 // Tambahkan headers jika diperlukan
@@ -55,6 +55,7 @@ function Login() {
 
       if (response.ok) {
         const userData = await getUserDataFromServer(email);
+        console.log(userData)
         setUser(userData);
         setIsLoggedIn(true);
         localStorage.setItem('user', JSON.stringify(userData));

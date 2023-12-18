@@ -375,7 +375,7 @@ def get_user(request):
         return Response('User not found', status=400)
 
     # Pastikan semua atribut yang Anda akses ada
-    return {'id_user': user.id_user, 'status': user.status, 'email': user.email, 'gambar': user.gambar}
+    return {'id_user': user.id_user, 'nama':user.nama, 'status': user.status, 'email': user.email, 'gambar': user.gambar}
 
 
 @view_config(route_name='get_products_specifics', renderer='json', request_method='GET')
@@ -572,33 +572,31 @@ def upload_bukti_pembayaran(request):
 def update_user(request):
     try:
         id_user = request.params.get('id_user')
-        user = DBSession.query(User).filter(
+        admin = DBSession.query(User).filter(
             User.id_user == id_user).first()
-        
-        if not user:
-            return {'error': 'User not found'}
+        if not admin:
+            return {'error': 'Admin not found'}
 
-        data = request.json_body
-        user.nama = data.get('nama', user.nama)
-        user.email = data.get('email', user.email)
+        admin.nama = request.POST.get('nama', admin.nama)
+        admin.email = request.POST.get('email', admin.email)
 
-        new_password = data.get('password')
+        new_password = request.POST.get('password')
         if new_password:
             hashed_password = bcrypt.hashpw(
                 new_password.encode('utf-8'), bcrypt.gensalt())
-            user.hashed_password = hashed_password
+            admin.hashed_password = hashed_password
 
         if 'foto' in request.POST:
             input_file = request.POST['foto'].file
-            save_path = f'../src/assets/img/profile_picture/{user.nama}.png'
+            save_path = f'../src/assets/img/profile_picture/{admin.nama}.png'
             with open(save_path, 'wb') as f:
                 f.write(input_file.read())
-            user.gambar = save_path
+            admin.gambar = save_path
 
-        DBSession.add(user)
+        DBSession.add(admin)
         DBSession.flush()
         DBSession.commit()
-        return {'success': True, 'message': 'Admin updated successfully'}
+        return {'success': True, 'message': 'User updated successfully'}
     except Exception as e:
         return {'error': str(e)}
 

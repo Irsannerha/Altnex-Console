@@ -17,6 +17,7 @@ import LaporanPenjualan from "./page/LaporanPenjualan";
 import KelolaPemesanan from "./page/KelolaPemesaan";
 import HistoryPemesanan from "./page/History";
 import DetailPesanan from "./page/DetailPesanan";
+import Profile from "./page/Profile";
 
 export default function RoutesApp() {
   return (
@@ -35,6 +36,7 @@ export default function RoutesApp() {
         <Route path="/KelolaPemesanan" element={<KelolaPemesanan />} />
         <Route path="/HistoryPemesanan/:id" element={<HistoryPemesanan />} />
         <Route path="/DetailPesanan/:id" element={<DetailPesanan />} />
+        <Route path="/Profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

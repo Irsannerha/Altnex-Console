@@ -84,6 +84,8 @@ function Navbars() {
               <Nav.Link href="#kontak" className="me-3">
                 Kontak
               </Nav.Link>
+              <Nav.Link href="#kontak" className="me-3">
+              </Nav.Link>
               {
                 isLoggedIn ? (
                   <Dropdown>
@@ -96,7 +98,7 @@ function Navbars() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                      <Dropdown.Item href="/Profile">Profile</Dropdown.Item>
                       <Dropdown.Item href={`/HistoryPemesanan/${user.id_user}`}>History</Dropdown.Item>
                       <Dropdown.Item onClick={handleLogout}>
                         Logout

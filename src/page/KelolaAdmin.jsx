@@ -131,6 +131,11 @@ function KelolaAdmin() {
   };
 
   const handleUpdate = async () => {
+    if (!admin.nama || !admin.email || !admin.password || !admin.foto) {
+      alert("Lengkapi");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("nama", admin.nama);
     formData.append("email", admin.email);
