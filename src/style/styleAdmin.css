@@ -1,106 +1,124 @@
-.layar{
-     background-color: brown;
-     height: 100vh;
+.layar {
+  background-color: brown;
+  height: 100vh;
 }
 
-.menuAdmin{
-     width: 17%;
-     height: 100vh;
-     border-radius: 0px;
-     -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-     -ms-border-radius: 0px;
-     -o-border-radius: 0px;
-     background: linear-gradient(176deg, #3AB4FF 0.25%, #000 266.64%);
+.menuAdmin {
+  width: 17%;
+  height: 100vh;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  background: linear-gradient(176deg, #3ab4ff 0.25%, #000 266.64%);
 }
 
-.judulMenu{
-     margin-bottom: 20px;
+.judulMenu {
+  margin-bottom: 20px;
 }
 
-.contenAdmin{
-     width: 83%;
-     border-radius: 0px;
-     -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-     -ms-border-radius: 0px;
-     -o-border-radius: 0px;
-     flex: 1;
-     overflow-y: auto;
-    
- 
+.contenAdmin {
+  width: 83%;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.logoAlt{
-     width: 154px;
-    height: 90px;
-    margin-bottom: -20px;
-    margin-top: -20px;
+.logoAlt {
+  width: 154px;
+  height: 90px;
+  margin-bottom: -20px;
+  margin-top: -20px;
 }
 
-.tombolMenu{
-     border: none;
-     width: 150px;
-     margin-bottom: 30px;
-     background: none;
-     color: #000;
-     font-size: 18px;
-     font-weight: 400;
-     text-align: left;
-     margin-left: 5px;
-   
-
+.tombolMenu {
+  border: none;
+  width: 150px;
+  margin-bottom: 30px;
+  background: none;
+  color: #000;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  margin-left: 5px;
 }
 
-.navbarAdmin{
-     width: 1110px;
-     height: 80px;
-     margin-top: -20px;
-     border-radius: 0px;
-     -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-     -ms-border-radius: 0px;
-     -o-border-radius: 0px;
+.navbarAdmin {
+  width: 1110px;
+  height: 80px;
+  margin-top: -20px;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
 }
 
-.conten{
-     height: 649.5px;
-     border-radius: 0px;
-     -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-     -ms-border-radius: 0px;
-     -o-border-radius: 0px;
+.conten {
+  height: 649.5px;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
 }
 
-.navTableFormShow{
-     width: 60px;
-     margin-left: 15px;
-     margin-right: 20px;
+.navTableFormShow {
+  width: 60px;
+  margin-left: 15px;
+  margin-right: 20px;
 }
 
-.navTableFormSearch{
-     margin-left: 15px;
+.navTableFormSearch {
+  margin-left: 15px;
 }
 
-.navButton{
-     border-radius: 8px;
-     background: #FFC029;
-     border: none;
-     color: white;
-     border-radius: 8x;
-     -webkit-border-radius: 8x;
-     -moz-border-radius: 8x;
-     -ms-border-radius: 8x;
-     -o-border-radius: 8x;
-     width: 200px;
+.navButton {
+  border-radius: 8px;
+  background: #ffc029;
+  border: none;
+  color: white;
+  border-radius: 8x;
+  -webkit-border-radius: 8x;
+  -moz-border-radius: 8x;
+  -ms-border-radius: 8x;
+  -o-border-radius: 8x;
+  width: 200px;
 }
 
-.navFromLabel{
-     font-size: 16px;
-     margin-top: 5px;
+.navFromLabel {
+  font-size: 16px;
+  margin-top: 5px;
 }
 
-.buttonAction{
-     border: none;
-     background-color: white;
+.buttonAction {
+  border: none;
+  background-color: white;
+}
+
+.dashboard-info {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #007bff; /* Warna latar belakang dapat disesuaikan */
+  color: #fff; /* Warna teks */
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  margin: 0 10px; /* Jarak antara info-item */
+}
+
+.info-item p {
+  margin-left: 10px;
+  margin-bottom: 0; /* Hapus margin bawah pada paragraf */
 }

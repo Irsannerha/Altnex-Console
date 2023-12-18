@@ -10,14 +10,14 @@ import ForgotPassword from "./page/ForgotPassword";
 import NewPassword from "./page/NewPassword";
 import NotFound from "./page/NotFound";
 import Pemesanan from "./page/Pemesanan";
+import DashboardSuperAdmin from "./page/DashboardSuperAdmin";
 import KelolaProduk from "./page/KelolaProdukAdmin";
 import KelolaAdmin from "./page/KelolaAdmin";
 import LaporanPenjualan from "./page/LaporanPenjualan";
 import KelolaPemesanan from "./page/KelolaPemesaan";
 import HistoryPemesanan from "./page/History";
-import DetailPesanan from "./page/DetailPesanan"
+import DetailPesanan from "./page/DetailPesanan";
 // import UserBeranda from "./page/UserBeranda"
-
 
 // import Checkout from "./page/Checkout";
 // import Dashboard from "./page/Dashboard";
@@ -35,6 +35,7 @@ export default function RoutesApp() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/pemesanan/:id" element={<Pemesanan />} />
+        <Route path="/DashboardSuperAdmin" element={<DashboardSuperAdmin />} />
         <Route path="/KelolaProduk" element={<KelolaProduk />} />
         <Route path="/KelolaAdmin" element={<KelolaAdmin />} />
         <Route path="/LaporanPenjualan" element={<LaporanPenjualan />} />
