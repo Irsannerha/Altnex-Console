@@ -1,4 +1,12 @@
-import { Card, Button, Form } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Form,
+  Modal,
+  ListGroup,
+  ListGroupItem,
+  Table,
+} from "react-bootstrap";
 import React, { useState, useEffect, useContext } from "react";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
@@ -15,7 +23,11 @@ function ContenDeluxe() {
   const [paymentPlan, setPaymentPlan] = useState("");
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [pesanan, setPesanan] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   useEffect(() => {
     axios
       .get(`/api/get_products/${id}`)
@@ -44,7 +56,7 @@ function ContenDeluxe() {
       id_pembayaran: paymentPlan,
       lama_booking: parseInt(durasi, 10),
       total_harga: totalHarga,
-      tipe: "Deluxe"
+      tipe: "Deluxe",
     };
 
     axios
@@ -62,6 +74,19 @@ function ContenDeluxe() {
       });
   };
 
+  useEffect(() => {
+    axios
+      .get("/api/get_pesanan")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setPesanan(response.data);
+        } else {
+          console.error("Received non-array response data:", response.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -78,7 +103,7 @@ function ContenDeluxe() {
       >
         <Card.Body>
           <img
-            style={{ float: "left"}}
+            style={{ float: "left" }}
             src={product.gambar}
             alt={product.kategoriPS}
             width="100"
@@ -142,8 +167,48 @@ function ContenDeluxe() {
           </div>
 
           <div className="d-flex justify-content-left align-item-left">
-            <Button className="cekJadwal">Cek Jadwal</Button>
+            <Button className="cekJadwal" onClick={handleShow}>
+              Cek Jadwal
+            </Button>
           </div>
+
+          <Modal show={showModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Jadwal PlayStation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Ini adalah jadwal PlayStation yang tersedia.
+              <Table responsive="sm">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Paket</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pesanan.map((pesanan) => (
+                    <tr key={pesanan.idPesanan}>
+                      <td>{pesanan.idPesanan}</td>
+                      <td>{pesanan.tipe}</td>
+                      <td>
+                        {new Date(pesanan.tanggalBooking).toLocaleDateString()}
+                      </td>
+                      <td>
+                        {new Date(pesanan.tanggalBooking).toLocaleTimeString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           <img
             style={{

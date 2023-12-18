@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, Button, Form } from "react-bootstrap";
+import { Card, Button, Form, Modal, Table } from "react-bootstrap";
 import "../style/style.css";
 import gambar1 from "../assets/img/image 29.png";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,7 +11,11 @@ function ContenExtra() {
   const [selectedPrice, setSelectedPrice] = useState(0);
   const [paymentPlan, setPaymentPlan] = useState("");
   const [tanggal, setTanggal] = useState("");
-  const [tipePaket, setTipePaket] = useState('');
+  const [tipePaket, setTipePaket] = useState("");
+  const [pesanan, setPesanan] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   const handlePriceSelection = (price, tipe) => {
     setSelectedPrice(price);
     setTipePaket(tipe);
@@ -38,6 +42,19 @@ function ContenExtra() {
     prices = { regular: 10000, ac: 20000, vip: 30000 };
   }
 
+  useEffect(() => {
+    axios
+      .get("/api/get_pesanan")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setPesanan(response.data);
+        } else {
+          console.error("Received non-array response data:", response.data);
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -58,7 +75,7 @@ function ContenExtra() {
       id_pembayaran: paymentPlan,
       lama_booking: 8,
       total_harga: selectedPrice,
-      tipe: tipePaket
+      tipe: tipePaket,
     };
 
     axios
@@ -124,6 +141,13 @@ function ContenExtra() {
             </Form.Group>
           </div>
 
+          <div className="d-flex justify-content-left align-item-left">
+            <Button className="cekJadwal" onClick={handleShow}>
+              Cek Jadwal
+            </Button>
+          </div>
+
+
           <Card className="cardHargaExtra mt-3">
             <Card.Body>
               <Card.Title
@@ -147,7 +171,9 @@ function ContenExtra() {
                       className={`hargaButton ${
                         selectedPrice === prices.regular && "selected"
                       }`}
-                      onClick={() => handlePriceSelection(prices.regular, 'Cigarette Room')}
+                      onClick={() =>
+                        handlePriceSelection(prices.regular, "Cigarette Room")
+                      }
                     >
                       {prices.regular}
                     </Button>
@@ -162,7 +188,7 @@ function ContenExtra() {
                       className={`hargaButton ${
                         selectedPrice === prices.ac && "selected"
                       }`}
-                      onClick={() => handlePriceSelection(prices.ac, 'AC Room')}
+                      onClick={() => handlePriceSelection(prices.ac, "AC Room")}
                     >
                       {prices.ac}
                     </Button>
@@ -177,7 +203,7 @@ function ContenExtra() {
                       className={`hargaButton ${
                         selectedPrice === prices.vip && "selected"
                       }`}
-                      onClick={() => handlePriceSelection(prices.vip, 'VIP')}
+                      onClick={() => handlePriceSelection(prices.vip, "VIP")}
                     >
                       {prices.vip}
                     </Button>
@@ -188,9 +214,43 @@ function ContenExtra() {
             </Card.Body>
           </Card>
 
-          <div className="d-flex justify-content-left align-item-left">
-            <Button className="cekJadwal">Cek Jadwal</Button>
-          </div>
+          <Modal show={showModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Jadwal PlayStation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Ini adalah jadwal PlayStation yang tersedia.
+              <Table responsive="sm">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Paket</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pesanan.map((pesanan) => (
+                    <tr key={pesanan.idPesanan}>
+                      <td>{pesanan.idPesanan}</td>
+                      <td>{pesanan.tipe}</td>
+                      <td>
+                        {new Date(pesanan.tanggalBooking).toLocaleDateString()}
+                      </td>
+                      <td>
+                        {new Date(pesanan.tanggalBooking).toLocaleTimeString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           <img
             style={{
