@@ -61,9 +61,13 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(userData));
         localStorage.setItem('isLoggedIn', 'true');
         if (userData.status === 'Admin') {
-          navigate('/KelolaAdmin');
-        } else if (userData.status === 'Member') {
+          navigate('/DashboardAdmin');
+        } 
+        else if (userData.status === 'Member') {
           navigate('/');
+        }
+        else if (userData.status === 'Super Admin') {
+          navigate('/DashboardSuperAdmin');
         }
 
         alert("Login Berhasil")

@@ -21,18 +21,16 @@ function AdminMenu() {
     navigate('/login')
   };
 
-  const handleNavigateToKelolaProduk = () => {
-    navigate('/KelolaProduk');
-  };
+
 
   const handleNavigateToKelolaAdmin = () => {
     navigate('/KelolaUser');
   };
   const handleNavigateToLaporanPenjualan = () => {
-    navigate('/LaporanPenjualan');
+    navigate('/LaporanPenjualanAdmin');
   };
   const handleNavigateToKelolaPemesanan = () => {
-    navigate('/KelolaPemesanan');
+    navigate('/KelolaPemesananAdmin');
   };
   const handleNavigateToDashboard = () => {
     navigate('/DashboardAdmin');
@@ -90,37 +88,7 @@ function AdminMenu() {
               </svg>
               <Button className="tombolMenu" onClick={handleNavigateToKelolaAdmin}>Kelola User</Button>
             </div>
-            <div>
-              <svg
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  marginTop: "-25px",
-                  flexShrink: "0",
-                }}
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-              >
-                <path
-                  d="M21.8751 21.875C25.0001 26.25 29.9363 23.0187 28.7501 18.75C26.9688 12.3387 26.0001 8.77 25.4963 6.885C25.3522 6.34524 25.0343 5.86803 24.5916 5.52726C24.1489 5.1865 23.6062 5.00118 23.0476 5H6.95256C5.80506 5 4.80506 5.78125 4.52631 6.89375C3.47506 11.0787 2.54131 14.7525 1.43006 18.75C0.245059 23.0187 5.18006 26.25 8.30506 21.875"
-                  stroke="black"
-                  stroke-width="1.875"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M20 5V7.5C20 8.16304 19.7366 8.79893 19.2678 9.26777C18.7989 9.73661 18.163 10 17.5 10H12.5C11.837 10 11.2011 9.73661 10.7322 9.26777C10.2634 8.79893 10 8.16304 10 7.5V5M10 20C10.663 20 11.2989 19.7366 11.7678 19.2678C12.2366 18.7989 12.5 18.163 12.5 17.5C12.5 16.837 12.2366 16.2011 11.7678 15.7322C11.2989 15.2634 10.663 15 10 15C9.33696 15 8.70107 15.2634 8.23223 15.7322C7.76339 16.2011 7.5 16.837 7.5 17.5C7.5 18.163 7.76339 18.7989 8.23223 19.2678C8.70107 19.7366 9.33696 20 10 20ZM20 20C20.663 20 21.2989 19.7366 21.7678 19.2678C22.2366 18.7989 22.5 18.163 22.5 17.5C22.5 16.837 22.2366 16.2011 21.7678 15.7322C21.2989 15.2634 20.663 15 20 15C19.337 15 18.7011 15.2634 18.2322 15.7322C17.7634 16.2011 17.5 16.837 17.5 17.5C17.5 18.163 17.7634 18.7989 18.2322 19.2678C18.7011 19.7366 19.337 20 20 20Z"
-                  stroke="black"
-                  stroke-width="1.875"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <Button className="tombolMenu" onClick={handleNavigateToKelolaProduk }>Kelola Produk</Button>
-            </div>
+           
             <div className="d-flex justify-content-left align-item-left">
               <svg
                 style={{

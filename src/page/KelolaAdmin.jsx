@@ -94,7 +94,7 @@ function KelolaAdmin() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
   useEffect(() => {
-    if (user.status != "Admin" || !isLoggedIn) {
+    if (user.status != "Super Admin" || !isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);

@@ -17,8 +17,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { FaCheck } from "react-icons/fa";
 import { Dropdown, ButtonGroup, Pagination } from "react-bootstrap";
+import AdminMenu from "../components/AdminMenu";
 
-function KelolaPemesanan() {
+function KelolaPemesananAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [notes, setNotes] = useState("");
   const [pesanan, setPesanan] = useState([]);
@@ -34,7 +35,7 @@ function KelolaPemesanan() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
   useEffect(() => {
-    if (user.status != "Super Admin" || !isLoggedIn) {
+    if (user.status != "Admin" || !isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
@@ -112,7 +113,7 @@ function KelolaPemesanan() {
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
-      <SuperAdminMenu />
+      <AdminMenu />
       <Card className="contenAdmin d-flex flex-column align-items-center">
         <Card.Body>
           <Card className="navbarAdmin">
@@ -255,4 +256,4 @@ function KelolaPemesanan() {
   );
 }
 
-export default KelolaPemesanan;
+export default KelolaPemesananAdmin;

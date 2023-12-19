@@ -22,7 +22,7 @@ function SuperAdminMenu() {
   };
 
   const handleNavigateToKelolaProduk = () => {
-    navigate('/KelolaProduk');
+    navigate('/KelolaProdukSuperAdmin');
   };
 
   const handleNavigateToKelolaAdmin = () => {

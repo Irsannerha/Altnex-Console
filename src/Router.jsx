@@ -11,7 +11,7 @@ import NewPassword from "./page/NewPassword";
 import NotFound from "./page/NotFound";
 import Pemesanan from "./page/Pemesanan";
 import DashboardSuperAdmin from "./page/DashboardSuperAdmin";
-import KelolaProduk from "./page/KelolaProdukAdmin";
+
 import KelolaAdmin from "./page/KelolaAdmin";
 import LaporanPenjualan from "./page/LaporanPenjualan";
 import KelolaPemesanan from "./page/KelolaPemesaan";
@@ -20,6 +20,10 @@ import DetailPesanan from "./page/DetailPesanan";
 import Profile from "./page/Profile";
 import DashboardAdmin from "./page/DashboardAdmin";
 import KelolaUser from "./page/KelolaUser";
+import KelolaProdukSuperAdminMenu from "./page/KelolaProdukSuperAdmin";
+import KelolaPemesananAdmin from "./page/KelolaPemesanaAdmin";
+import LaporanPenjualanAdmin from "./page/LaporanPenjualanAdmin";
+import KelolaProdukSuperAdmin from "./page/KelolaProdukSuperAdmin";
 
 export default function RoutesApp() {
   return (
@@ -32,7 +36,7 @@ export default function RoutesApp() {
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/pemesanan/:id" element={<Pemesanan />} />
         <Route path="/DashboardSuperAdmin" element={<DashboardSuperAdmin />} />
-        <Route path="/KelolaProduk" element={<KelolaProduk />} />
+      
         <Route path="/KelolaAdmin" element={<KelolaAdmin />} />
         <Route path="/LaporanPenjualan" element={<LaporanPenjualan />} />
         <Route path="/KelolaPemesanan" element={<KelolaPemesanan />} />
@@ -41,6 +45,9 @@ export default function RoutesApp() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/KelolaUser" element={<KelolaUser />} />
+        <Route path="/KelolaProdukSuperAdmin" element={<KelolaProdukSuperAdmin />} />
+        <Route path="/KelolaPemesananAdmin" element={<KelolaPemesananAdmin />} />
+        <Route path="/LaporanPenjualanAdmin" element={<LaporanPenjualanAdmin />} />
       </Routes>
     </BrowserRouter>
   );

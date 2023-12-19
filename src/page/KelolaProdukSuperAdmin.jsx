@@ -19,8 +19,9 @@ import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { Dropdown, ButtonGroup, Pagination } from "react-bootstrap";
+import AdminMenu from "../components/AdminMenu";
 
-function KelolaProduk() {
+function KelolaProdukSuperAdmin() {
   const [showAlert, setShowAlert] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({
@@ -90,7 +91,7 @@ function KelolaProduk() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
   useEffect(() => {
-    if (user.status != "Admin" || !isLoggedIn) {
+    if (user.status != "Super Admin" || !isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
@@ -441,4 +442,4 @@ function KelolaProduk() {
   );
 }
 
-export default KelolaProduk;
+export default KelolaProdukSuperAdmin;

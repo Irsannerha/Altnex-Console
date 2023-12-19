@@ -18,6 +18,7 @@ import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { Pagination } from "react-bootstrap";
+import AdminMenu from "../components/AdminMenu";
 
 function KelolaUser() {
   const [showAlert, setShowAlert] = useState(false);
@@ -84,7 +85,7 @@ function KelolaUser() {
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
-      <SuperAdminMenu />
+      <AdminMenu />
       <Card className="contenAdmin d-flex flex-column align-items-center">
         <Card.Body>
           <Card className="navbarAdmin">

@@ -15,8 +15,9 @@ import SuperAdminMenu from "../components/SuperAdminMenu";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { Dropdown } from "react-bootstrap";
+import AdminMenu from "../components/AdminMenu";
 
-function LaporanPenjualan() {
+function LaporanPenjualanAdmin() {
   const months = [
     "Januari",
     "Februari",
@@ -90,7 +91,7 @@ function LaporanPenjualan() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(UserContext);
   useEffect(() => {
-    if (user.status != "Super Admin" || !isLoggedIn) {
+    if (user.status != "Admin" || !isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
@@ -101,7 +102,7 @@ function LaporanPenjualan() {
 
   return (
     <div className="d-flex justify-content-center align-item-center layar">
-      <SuperAdminMenu />
+      <AdminMenu />
       <Card className="contenAdmin d-flex flex-column align-items-center">
         <Card.Body>
           <Card className="navbarAdmin">
@@ -182,4 +183,4 @@ function LaporanPenjualan() {
   );
 }
 
-export default LaporanPenjualan;
+export default LaporanPenjualanAdmin;
