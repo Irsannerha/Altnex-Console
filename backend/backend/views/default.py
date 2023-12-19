@@ -306,18 +306,27 @@ def save_admin(request):
 @view_config(route_name='get_admin', renderer='json', request_method='GET')
 def get_admin(request):
     try:
-        # Query all products from the database
         admins = DBSession.query(User).filter(User.status == "Admin").all()
 
-        # Convert the product data to a list of dictionaries
         admin_data = [{'id_user': user.id_user, 'foto': user.gambar, 'nama': user.nama,
                        'email': user.email, 'password': user.password} for user in admins]
 
-        # Return the product data as JSON
         return {'admins': admin_data}
 
     except Exception as e:
-        # Handle any exceptions (e.g., database errors)
+        return Response('Error: ' + str(e), status=500)
+    
+@view_config(route_name='get_member', renderer='json', request_method='GET')
+def get_member(request):
+    try:
+        admins = DBSession.query(User).filter(User.status == "Member").all()
+
+        admin_data = [{'id_user': user.id_user, 'foto': user.gambar, 'nama': user.nama,
+                       'email': user.email, 'password': user.password} for user in admins]
+
+        return {'admins': admin_data}
+
+    except Exception as e:
         return Response('Error: ' + str(e), status=500)
 
 
@@ -327,6 +336,27 @@ def hapus_admin(request):
         email = request.params.get('email')
         delete_query = DBSession.query(User).filter(
             User.email == email, User.status == 'Admin').first()
+        if delete_query:
+            DBSession.delete(delete_query)
+        else:
+            # Handle kasus di mana user tidak ditemukan
+            return Response("Email Tidak Ada", status=400)
+        DBSession.flush()
+        DBSession.commit()
+
+        return {"status": "Success"}
+
+    except KeyError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Invalid data"})
+    except DBAPIError:
+        return HTTPBadRequest(json_body={"status": "error", "message": "Database error"})
+
+@view_config(route_name='hapus_user', renderer='json', request_method='DELETE')
+def hapus_user(request):
+    try:
+        email = request.params.get('email')
+        delete_query = DBSession.query(User).filter(
+            User.email == email, User.status == 'Member').first()
         if delete_query:
             DBSession.delete(delete_query)
         else:

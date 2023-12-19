@@ -18,6 +18,8 @@ import KelolaPemesanan from "./page/KelolaPemesaan";
 import HistoryPemesanan from "./page/History";
 import DetailPesanan from "./page/DetailPesanan";
 import Profile from "./page/Profile";
+import DashboardAdmin from "./page/DashboardAdmin";
+import KelolaUser from "./page/KelolaUser";
 
 export default function RoutesApp() {
   return (
@@ -37,6 +39,8 @@ export default function RoutesApp() {
         <Route path="/HistoryPemesanan/:id" element={<HistoryPemesanan />} />
         <Route path="/DetailPesanan/:id" element={<DetailPesanan />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+        <Route path="/KelolaUser" element={<KelolaUser />} />
       </Routes>
     </BrowserRouter>
   );

@@ -36,6 +36,8 @@ def main(global_config, **settings):
         config.add_route('get_admin', '/api/get_admin',  request_method='GET')
         config.add_route('get_user', '/api/get_user',  request_method='GET')
         config.add_route('hapus_admin', '/api/hapus_admin', request_method='DELETE')
+        config.add_route('hapus_user', '/api/hapus_user', request_method='DELETE')
+        config.add_route('get_member', '/api/get_member', request_method='GET')
         config.add_route('hapus_produk', '/api/hapus_produk', request_method='DELETE')
         config.add_route('get_ps5', '/api/get_ps5',  request_method='GET')
         config.add_route('get_ps4', '/api/get_ps4',  request_method='GET')
