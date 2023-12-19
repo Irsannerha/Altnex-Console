@@ -7521,10 +7521,17 @@ jest-worker@^28.0.2:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
+<<<<<<< HEAD
 "jest@^27.0.0 || ^28.0.0", jest@^27.4.3:
   version "27.5.1"
   resolved "https://registry.npmjs.org/jest/-/jest-27.5.1.tgz"
   integrity sha512-Yn0mADZB89zTtjkPJEXwrac3LHudkQMR+Paqa8uxJHCBr9agxztUifWCyiYrjhMPBoUVBjyny0I7XH6ozDr7QQ==
+=======
+"jest@^27.0.0 || ^28.0.0", "jest@^27.4.3", "jest@^27.5.1":
+  "integrity" "sha512-Yn0mADZB89zTtjkPJEXwrac3LHudkQMR+Paqa8uxJHCBr9agxztUifWCyiYrjhMPBoUVBjyny0I7XH6ozDr7QQ=="
+  "resolved" "https://registry.npmjs.org/jest/-/jest-27.5.1.tgz"
+  "version" "27.5.1"
+>>>>>>> ea0ba36f46fa72c615a08e7c8e030b91ae2e97d4
   dependencies:
     "@jest/core" "^27.5.1"
     import-local "^3.0.2"

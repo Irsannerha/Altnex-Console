@@ -11,7 +11,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap";
-// import { Bar } from "react-chartjs-2";
+
 import SuperAdminMenu from "../components/SuperAdminMenu";
 import BarChart from "../components/BarChart";
 import "bootstrap/dist/css/bootstrap.min.css";

@@ -18,7 +18,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUserShield, faBox } from "@fortawesome/free-solid-svg-icons";
 import "../style/styleAdmin.css";
-import AdminMenu from "../components/AdminMenu";
+ import AdminMenu from "../components/AdminMenu";
 
 function DashboardAdmin() {
   const [totalUsers, setTotalUsers] = useState(0);

@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function AdminMenu() {
   const navigate = useNavigate();
-  const { setUser, setIsLoggedIn } = useContext(UserContext);
+   const { setUser, setIsLoggedIn } = useContext(UserContext);
 
   const handleLogout = () => {
     // Proses logout: Menghapus data dari localStorage, mengatur UserContext
